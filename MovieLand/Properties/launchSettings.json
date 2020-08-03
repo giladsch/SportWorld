@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Hydra": {
+    "MovieLand": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

@@ -1,15 +1,15 @@
 ﻿using System;
-using Hydra.DAL;
-using Hydra.Data;
+using MovieLand.DAL;
+using MovieLand.Data;
 
-namespace Hydra.BL
+namespace MovieLand.BL
 {
     public class CommentBl
     {
         private readonly ProductDataAccess _productDal;
         private readonly UserDataAccess _userDal;
 
-        public CommentBl(HydraContext context)
+        public CommentBl(MovieLandContext context)
         {
             _productDal = new ProductDataAccess(context);
             _userDal = new UserDataAccess(context);

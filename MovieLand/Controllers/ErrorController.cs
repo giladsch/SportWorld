@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class ErrorController : Controller
     {

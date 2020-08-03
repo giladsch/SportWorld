@@ -1,6 +1,6 @@
-﻿using Hydra.DAL;
-using Hydra.Data;
-using Hydra.Models;
+﻿using MovieLand.DAL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class AdminController : Controller
     {
@@ -16,11 +16,11 @@ namespace Hydra.Controllers
         private readonly UserDataAccess _userDataAccess;
         private readonly AdminDataAccess _adminDataAccess;
 
-        public AdminController(IOptions<AppSettings> settings, HydraContext hydraContext)
+        public AdminController(IOptions<AppSettings> settings, MovieLandContext movieLandContext)
         {
             _settings = settings.Value.AdminCredentials;
-            _adminDataAccess = new AdminDataAccess(hydraContext);
-            _userDataAccess = new UserDataAccess(hydraContext);
+            _adminDataAccess = new AdminDataAccess(movieLandContext);
+            _userDataAccess = new UserDataAccess(movieLandContext);
         }
 
         public ActionResult Index()

@@ -1,19 +1,19 @@
-﻿using Hydra.DAL;
-using Hydra.Data;
-using Hydra.Models;
+﻿using MovieLand.DAL;
+using MovieLand.Data;
+using MovieLand.Models;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 
-namespace Hydra.BL
+namespace MovieLand.BL
 {
     public class ProductBl
     {
         private readonly ProductDataAccess _productDataAccess;
 
-        public ProductBl(HydraContext hydraContext)
+        public ProductBl(MovieLandContext movieLandContext)
         {
-            _productDataAccess = new ProductDataAccess(hydraContext);
+            _productDataAccess = new ProductDataAccess(movieLandContext);
         }
 
         public List<Product> GetAllProducts()

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Hydra.Models
+namespace MovieLand.Models
 {
 	public class Store
 	{

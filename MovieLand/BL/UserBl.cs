@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hydra.DAL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.DAL;
+using MovieLand.Data;
+using MovieLand.Models;
 
-namespace Hydra.BL
+namespace MovieLand.BL
 {
     public class UserBl
     {
         private readonly UserDataAccess _userDal;
 
-        public UserBl(HydraContext context)
+        public UserBl(MovieLandContext context)
         {
             _userDal = new UserDataAccess(context);
         }

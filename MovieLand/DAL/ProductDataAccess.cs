@@ -1,24 +1,24 @@
-﻿using Hydra.Data;
-using Hydra.Models;
+﻿using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hydra.DAL
+namespace MovieLand.DAL
 {
     public class ProductDataAccess
     {
-        private readonly HydraContext _hydraContext;
+        private readonly MovieLandContext _movieLandContext;
 
-        public ProductDataAccess(HydraContext hydraContext)
+        public ProductDataAccess(MovieLandContext movieLandContext)
         {
-            _hydraContext = hydraContext;
+            _movieLandContext = movieLandContext;
         }
 
         public List<Product> GetAllProducts()
         {
-            return _hydraContext
+            return _movieLandContext
                 .Product
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Publisher)
@@ -27,7 +27,7 @@ namespace Hydra.DAL
 
         public Product GetProductById(int productId)
         {
-            return _hydraContext.Product
+            return _movieLandContext.Product
                                 .Include(p => p.Comments)
                                 .ThenInclude(c => c.Publisher)
                                 .FirstOrDefault(x => x.ID == productId);
@@ -35,7 +35,7 @@ namespace Hydra.DAL
 
         public IEnumerable<Product> GetProductsByCategory(Category category)
         {
-            return _hydraContext.Product
+            return _movieLandContext.Product
                     .Include(p => p.Comments)
                     .ThenInclude(c => c.Publisher)
                     .Where(p => p.Category == category)
@@ -44,25 +44,25 @@ namespace Hydra.DAL
 
         public void SaveProducts(IEnumerable<Product> products)
         {  
-            _hydraContext.Product.AddRange(products);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Product.AddRange(products);
+            _movieLandContext.SaveChanges();
         }
 
         public void AddComment(int productId, Comment comment)
         {
             this.GetProductById(productId).Comments.Add(comment);
-            _hydraContext.SaveChanges();
+            _movieLandContext.SaveChanges();
         }
 
         public void UpdateProduct(Product product)
         {
-            _hydraContext.Product.Update(product);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Product.Update(product);
+            _movieLandContext.SaveChanges();
         }
 
         public void DeleteProduct(Product product)
         {
-            var productToDelete = _hydraContext
+            var productToDelete = _movieLandContext
                 .Product
                 .Include(p => p.Comments)
                 .SingleOrDefault(p => p.ID == product.ID);
@@ -73,9 +73,9 @@ namespace Hydra.DAL
                     Exception(string.Format("could not find product with id {0}", product.ID));
             }
 
-            _hydraContext.Comment.RemoveRange(productToDelete.Comments);
-            _hydraContext.Product.Remove(productToDelete);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Comment.RemoveRange(productToDelete.Comments);
+            _movieLandContext.Product.Remove(productToDelete);
+            _movieLandContext.SaveChanges();
         }
     }
 }

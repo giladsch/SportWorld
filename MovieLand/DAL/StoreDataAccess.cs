@@ -1,61 +1,61 @@
-﻿using Hydra.Data;
-using Hydra.Models;
+﻿using MovieLand.Data;
+using MovieLand.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hydra.DAL
+namespace MovieLand.DAL
 {
     public class StoreDataAccess
     {
-        private readonly HydraContext _hydraContext;
+        private readonly MovieLandContext _movieLandContext;
 
-        public StoreDataAccess(HydraContext hydraContext)
+        public StoreDataAccess(MovieLandContext movieLandContext)
         {
-            _hydraContext = hydraContext;
+            _movieLandContext = movieLandContext;
         }
 
         public void UpdateStore(Store storeToUpdate)
         {
-            _hydraContext.Store.Update(storeToUpdate);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Store.Update(storeToUpdate);
+            _movieLandContext.SaveChanges();
         }
 
         public Store GetStoreById(int id)
         {
-            return _hydraContext.Store
+            return _movieLandContext.Store
                 .SingleOrDefault(x => x.ID == id);
         }
 
         public List<Store> GetAllStores()
         {
-            return _hydraContext.Store
+            return _movieLandContext.Store
                 .ToList();
         }
 
         public IEnumerable<Store> GetStoreByName(string name)
         {
-            return _hydraContext.Store
+            return _movieLandContext.Store
                                 .Where(s => s.Name.Contains(name))
                                 .ToList();
         }
 
         public Store GetStroeById(int storeId)
         {
-            return _hydraContext.Store
+            return _movieLandContext.Store
                 .SingleOrDefault(store => store.ID == storeId);
         }
 
         public void AddStore(Store store)
         {
-            _hydraContext.Store.Add(store);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Store.Add(store);
+            _movieLandContext.SaveChanges();
         }
 
         public void DeleteStore(Store store)
         {
-            _hydraContext.Store.Remove(store);
-            _hydraContext.SaveChanges();
+            _movieLandContext.Store.Remove(store);
+            _movieLandContext.SaveChanges();
         }
     }
 }

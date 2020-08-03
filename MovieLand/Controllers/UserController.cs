@@ -1,17 +1,17 @@
 ﻿using System;
-using Hydra.BL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.BL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class UserController: Controller
     {
         private readonly UserBl _userBl;
 
-        public UserController(HydraContext context)
+        public UserController(MovieLandContext context)
         {
             _userBl = new UserBl(context);
         }

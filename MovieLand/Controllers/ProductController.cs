@@ -1,19 +1,19 @@
 ﻿using System;
-using Hydra.BL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.BL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ProductBl _productBl;
 
-        public ProductController(HydraContext hydraContext)
+        public ProductController(MovieLandContext movieLandContext)
         {
-            _productBl = new ProductBl(hydraContext);
+            _productBl = new ProductBl(movieLandContext);
         }
 
         // GET: Product

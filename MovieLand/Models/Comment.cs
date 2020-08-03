@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hydra.Models
+namespace MovieLand.Models
 {
     public class Comment
     {

@@ -1,18 +1,18 @@
-﻿using Hydra.DAL;
-using Hydra.Data;
-using Hydra.Models;
+﻿using MovieLand.DAL;
+using MovieLand.Data;
+using MovieLand.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hydra.BL
+namespace MovieLand.BL
 {
     public class StoreBl
     {
         private readonly StoreDataAccess _storeDataAccess;
 
-        public StoreBl(HydraContext hydraContext)
+        public StoreBl(MovieLandContext movieLandContext)
         {
-            _storeDataAccess = new StoreDataAccess(hydraContext);
+            _storeDataAccess = new StoreDataAccess(movieLandContext);
         }
 
         public List<Store> GetAllStores()

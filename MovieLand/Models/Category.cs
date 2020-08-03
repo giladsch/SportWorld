@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hydra.Models
+namespace MovieLand.Models
 {
     public enum Category
     {

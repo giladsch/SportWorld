@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Hydra.Models.Product>
+﻿@model IEnumerable<MovieLand.Models.Product>
 
 @{
     ViewData["Title"] = "Catalog";
@@ -8,7 +8,14 @@
 @{
     if (Model.All(p => p.Category == Model.ElementAt(0).Category))
     {
-        <h2>All products in the catalog from the @Model.ElementAt(0).Category</h2>
+        if (Model.Count() != 0)
+        {
+            <h2>All products in the catalog from the @Model.ElementAt(0).Category</h2>
+        }
+        else
+        {
+            <h2>No products Match</h2>
+        }
     }
     else
     {
@@ -17,26 +24,26 @@
 }
 
 @{
-        <table>
-            @{ for (int row = 0; row < Model.Count() / 3; row++)
-                {
-                    <tr class="row">
-                        @{ for (int col = 0; col < 3; col++)
-                            {
-                                Product currProduct = Model.ElementAt(row * 3 + col);
+    <table>
+        @{ for (int row = 0; row < Model.Count() / 3; row++)
+            {
+                <tr class="row">
+                    @{ for (int col = 0; col < 3; col++)
+                        {
+                            Product currProduct = Model.ElementAt(row * 3 + col);
 
-                                <td class="column">
-                                    <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">
-                                    <p>
-                                        @Html.ActionLink(currProduct.Name, "Details", "Product", new { id = currProduct.ID })
-                                    </p>
-                                </td>
-                            }
+                            <td class="column">
+                                <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">
+                                <p>
+                                    @Html.ActionLink(currProduct.Name, "Details", "Product", new { id = currProduct.ID })
+                                </p>
+                            </td>
                         }
-                    </tr>
-                }
+                    }
+                </tr>
             }
-        </table>
+        }
+    </table>
 }
 
 <div>

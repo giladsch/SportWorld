@@ -1,17 +1,17 @@
 ﻿using System;
-using Hydra.BL;
-using Hydra.Data;
+using MovieLand.BL;
+using MovieLand.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class CommentController : Controller
     {
         private readonly CommentBl _commentBl;
 
 
-        public CommentController(HydraContext context)
+        public CommentController(MovieLandContext context)
         {
             _commentBl = new CommentBl(context);
         }

@@ -1,21 +1,21 @@
 ﻿using System.Linq;
-using Hydra.BL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.BL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class CatalogController : Controller
     {
         private readonly ProductBl _productBl;
         private readonly StoreBl _storeBl;
 
-        public CatalogController(HydraContext hydraContext)
+        public CatalogController(MovieLandContext movieLandContext)
         {
-            _productBl = new ProductBl(hydraContext);
-            _storeBl = new StoreBl(hydraContext);
+            _productBl = new ProductBl(movieLandContext);
+            _storeBl = new StoreBl(movieLandContext);
         }
 
         public ActionResult ByCategory(Category category)

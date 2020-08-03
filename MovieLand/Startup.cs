@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Hydra.Data;
+using MovieLand.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
-using Hydra.Models;
+using MovieLand.Models;
 
-namespace Hydra
+namespace MovieLand
 {
 	public class Startup
 	{
@@ -27,11 +27,11 @@ namespace Hydra
 		{
 			services.AddMvc();
 
-            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("HydraContext"));
+            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("movieLandContext"));
             //{
             //    Password = Configuration["Secret:DbPassword"]
             //};
-            services.AddDbContext<HydraContext>(options =>
+            services.AddDbContext<MovieLandContext>(options =>
                                                 options.UseSqlServer(builder.ConnectionString));
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));

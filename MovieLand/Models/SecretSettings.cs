@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Hydra
+namespace MovieLand
 {
     public interface ISecretSettings 
     {

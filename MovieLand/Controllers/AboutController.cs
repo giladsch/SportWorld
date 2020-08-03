@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Hydra.BL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.BL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class AboutController : Controller
     {
         private readonly StoreBl _storeBl;
         private readonly ISecretSettings _secrets;
 
-        public AboutController(HydraContext hydraContext, [FromServices]ISecretSettings secrets)
+        public AboutController(MovieLandContext movieLandContext, [FromServices]ISecretSettings secrets)
         {
-            _storeBl = new StoreBl(hydraContext);
+            _storeBl = new StoreBl(movieLandContext);
             _secrets = secrets;
         }
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Hydra pop";
+            ViewData["Message"] = "MovieLand pop";
             ViewData["MapCredantials"] = _secrets.MapCredantials;
 
             return View();

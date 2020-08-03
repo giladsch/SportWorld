@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hydra.BL;
-using Hydra.DAL;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.BL;
+using MovieLand.DAL;
+using MovieLand.Data;
+using MovieLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class StoreController : Controller
     {
         private readonly StoreBl _storeBl;
 
-        public StoreController(HydraContext hydraContext)
+        public StoreController(MovieLandContext movieLandContext)
         {
-            _storeBl = new StoreBl(hydraContext);
+            _storeBl = new StoreBl(movieLandContext);
         }
 
 

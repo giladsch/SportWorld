@@ -1,23 +1,23 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Hydra.Models;
-using Hydra.BL;
-using Hydra.Data;
+using MovieLand.Models;
+using MovieLand.BL;
+using MovieLand.Data;
 using System;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ProductBl _productBl;
 
-        public HomeController(HydraContext hydraContext)
+        public HomeController(MovieLandContext movieLandContext)
         {
-            _productBl = new ProductBl(hydraContext);
+            _productBl = new ProductBl(movieLandContext);
         }
 
         public IActionResult Index()

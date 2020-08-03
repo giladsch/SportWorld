@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using Hydra.Models;
+using MovieLand.Models;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace Hydra.Data
+namespace MovieLand.Data
 {
-	public class HydraContext : DbContext
+	public class MovieLandContext : DbContext
 	{
-		public HydraContext(DbContextOptions<HydraContext> options)
+		public MovieLandContext(DbContextOptions<MovieLandContext> options)
 			: base(options)
 		{
             if (Database.EnsureCreated())
@@ -24,7 +24,7 @@ namespace Hydra.Data
         public DbSet<User> User { get; set; }
         public DbSet<Comment> Comment { get; set; }
 
-        private void InitializeProducts(HydraContext hydraContext)
+        private void InitializeProducts(MovieLandContext movieLandContext)
         {
             var telAviv = new Store
             {
@@ -65,8 +65,8 @@ namespace Hydra.Data
                 Name = "Gal Hen"
             };
 
-            hydraContext.User.AddRange(meirav, gal);
-            hydraContext.Store.AddRange(telAviv, jerusalem, eilat);
+            movieLandContext.User.AddRange(meirav, gal);
+            movieLandContext.Store.AddRange(telAviv, jerusalem, eilat);
 
             var fileEntries = Directory.GetFiles("./products");
             foreach (string fileName in fileEntries)
@@ -91,7 +91,7 @@ namespace Hydra.Data
 
                 Product.AddRange(figuresNoId);                
             }
-            hydraContext.SaveChanges();
+            movieLandContext.SaveChanges();
         }
     }
 }

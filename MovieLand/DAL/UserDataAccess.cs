@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Hydra.Data;
-using Hydra.Models;
+using MovieLand.Data;
+using MovieLand.Models;
 
-namespace Hydra.DAL
+namespace MovieLand.DAL
 {
     public class UserDataAccess
     {
-        private readonly HydraContext _context;
+        private readonly MovieLandContext _context;
 
-        public UserDataAccess(HydraContext context)
+        public UserDataAccess(MovieLandContext context)
         {
             _context = context;
         }

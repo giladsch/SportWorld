@@ -1,37 +1,37 @@
-﻿using Hydra.Data;
+﻿using MovieLand.Data;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hydra.Controllers
+namespace MovieLand.Controllers
 {
 
 
     public class StatisticsController : Controller
     {
-        private readonly HydraContext _hydraContext;
+        private readonly MovieLandContext _movieLandContext;
 
-        public StatisticsController(HydraContext hydraContext)
+        public StatisticsController(MovieLandContext movieLandContext)
         {
-            _hydraContext = hydraContext;
+            _movieLandContext = movieLandContext;
         }
 
         public PartialViewResult GetStatistics()
         {
 
-            var usersByGender = _hydraContext.User
+            var usersByGender = _movieLandContext.User
                 .GroupBy(g => g.Gender)
                 .Select(x => new { gender = x.Key.ToString(), count = x.Count() })
                 .ToList();
             
-            var prodcutsByCategory = _hydraContext.Product
+            var prodcutsByCategory = _movieLandContext.Product
                 .GroupBy(p => p.Category)
                 .Select(x => new { category = x.Key.ToString(), count = x.Count() })
                 .ToList();
 
-            var commentsByGender = _hydraContext.Comment
+            var commentsByGender = _movieLandContext.Comment
                 .GroupBy(c => c.Publisher.Gender)
                 .Select(x => new { gender = x.Key.ToString(), count = x.Count() });
 

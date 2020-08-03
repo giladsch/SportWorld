@@ -1,0 +1,47 @@
+﻿@model Hydra.Models.Store
+
+<div>
+    @Html.DisplayFor(model => model.Name)
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lontitude)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lontitude)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OpeningHour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpeningHour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosingHour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ClosingHour)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="About">Back to Map</a>
+</div>

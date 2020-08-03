@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Hydra.Models.Product>
+
+@{
+    ViewData["Title"] = "Catalog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (Model.All(p => p.Category == Model.ElementAt(0).Category))
+    {
+        <h2>All products in the catalog from the @Model.ElementAt(0).Category</h2>
+    }
+    else
+    {
+        <h2>All products in the catalog</h2>
+    }
+}
+
+@{
+        <table>
+            @{ for (int row = 0; row < Model.Count() / 3; row++)
+                {
+                    <tr class="row">
+                        @{ for (int col = 0; col < 3; col++)
+                            {
+                                Product currProduct = Model.ElementAt(row * 3 + col);
+
+                                <td class="column">
+                                    <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">
+                                    <p>
+                                        @Html.ActionLink(currProduct.Name, "Details", "Product", new { id = currProduct.ID })
+                                    </p>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </table>
+}
+
+<div>
+    <a class="btn-link" href='javascript:history.go(-1)'>Previous page</a>
+    <br />
+    <a asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

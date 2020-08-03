@@ -1,0 +1,21 @@
+﻿<div class="row text-center">
+    @*<div class="col-md-5">
+        <a href="/Catalog/ByCategory?category=@ViewBag.Categories[0]" class="thumbnail">
+            <img src="@string.Format("images/{0}.{1}", ViewBag.Categories[0], "jpg")" />
+        </a>
+    </div>*@
+    <div class="rowImage">
+        @{
+            for (var i =0; i < ViewBag.Categories.Length; i++)
+            {
+                <div class="columnImage">
+              
+                        <a href="/Catalog/ByCategory?category=@ViewBag.Categories[i]" class="thumbnail">
+                            <img src="@string.Format("images/{0}.{1}", ViewBag.Categories[i], "jpg")" />
+                        </a>
+                 
+                </div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿.product-item-box {
+    border:hidden;
+    margin-bottom: 10px;
+    align-content: center;
+}
+
+.product-item-img {
+    height: 250px;
+    width: 250px;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

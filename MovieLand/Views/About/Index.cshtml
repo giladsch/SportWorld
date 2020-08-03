@@ -1,0 +1,25 @@
+﻿@section Scripts {
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=getMap&setLang=he-IL&key=@ViewData["MapCredantials"]' async defer></script>
+}
+
+@{
+    ViewData["Title"] = "About";
+}
+    <h2>@ViewData["Title"]</h2>
+    <h3>@ViewData["Message"]</h3>
+
+    <p>
+        This is a great store. You should totally buy out products.
+    </p>   
+
+    <div id="map-wrapper">
+        <div class="side-panel">
+            <div class="search-bar">
+                <input id="search-box" type="text" />
+                <input id="search-btn" type="button" value="Search" />
+            </div>
+            <div id="results-panel"></div>
+        </div>
+
+        <div id="store-locations-map"></div>
+    </div>

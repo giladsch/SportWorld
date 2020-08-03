@@ -1,0 +1,59 @@
+﻿
+<section>
+    <br />
+    <div class="alert alert-info" role="alert">
+        To view some statistics @Html.ActionLink("click here", "GetStatistics", "Statistics")
+    </div>
+    <br />
+    <div class="alert alert-info" role="alert">
+        To view users info @Html.ActionLink("click here", "Details", "User")
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="alert alert-success" role="alert">
+        To add a new product @Html.ActionLink("click here", "Create", "Product")
+    </div>
+    <br />
+    <div class="alert alert-warning" role="alert">
+        To add a new store @Html.ActionLink("click here", "Create", "Store")
+    </div>
+    <br />
+    <div class="alert alert-danger" role="alert">
+        To add a new user @Html.ActionLink("click here", "Create", "User")
+    </div>
+    <br />
+    <hr />
+    <br />
+</section>
+
+<section>
+    <h2>Search for users comments</h2>
+    <form asp-action="Search" asp-controller="Admin" method="get">
+        <div class="form-group">
+            <label class="control-label">Start date</label>
+            <input type="date" name="start" value="" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">End date</label>
+            <input type="date" name="end" value="" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">User name</label>
+            <select name="userId" class="form-control">
+                @foreach (var user in ViewBag.users as IEnumerable<User>)
+                {
+                    <option value="@user.ID">@user.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search!" class="btn btn-success" />
+        </div>
+    </form>
+</section>
+
+@using (Html.BeginForm("Logout", "Admin"))
+{
+    <input type="submit" class="btn btn-danger" value="Logout" />
+}

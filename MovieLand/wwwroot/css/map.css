@@ -1,0 +1,79 @@
+﻿#map-wrapper {
+    width: 100%;
+    float: left;
+}
+
+.header {
+    width: 100%;
+    height: 80px;
+    background-color: #8f0202;
+    float: left;
+}
+
+    .header img {
+        height: 60px;
+        margin-left: 15px;
+    }
+
+.side-panel {
+    padding: 10px;
+    width: 300px;
+    height: calc(100% - 100px);
+    vertical-align: top;
+    float: left;
+}
+
+#search-box {
+    width: 180px;
+}
+
+.search-bar {
+    height: 50px;
+}
+
+.results-banel {
+    width: 280px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#store-locations-map {
+    position: relative;
+    width: calc(100% - 320px);
+    height: 400px;
+    float: left;
+}
+
+.error-msg {
+    color: red;
+}
+
+.list-item {
+    font-size: 12px;
+    font-family: Arial,Helvetica;
+    width: 260px;
+    margin: 5px 0;
+}
+
+    .list-item td {
+        vertical-align: top;
+    }
+
+    .list-item span {
+        font-size: 14px;
+    }
+
+.title, .title:link, .title:visited, .title:active {
+    font-size: 14px;
+    color: #8f0202;
+}
+
+    .title:hover {
+        color: red;
+    }
+
+.infobox-info {
+    color: #000 !important;
+    font-size: 12px !important;
+    padding-top: 0px !important;
+}

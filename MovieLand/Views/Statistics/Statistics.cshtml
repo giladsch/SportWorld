@@ -1,0 +1,264 @@
+﻿<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+<div class="page-header">
+    <h1>Statistics for manager</h1>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Products by store</h3>
+    </div>
+    <div class="panel-body">
+        <p>The following pie shows the number of users according to their gender</p>
+        <p>Hover on the pie to see that gender</p>
+        <div class="pie"></div>
+        <p id="tooltip"></p>
+    </div>
+</div>
+<br /><br />
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Products by category</h3>
+    </div>
+    <div class="panel-body">
+        <p>The following chart shows the number of pop figures per category</p>
+        <div class="bar" id="statistics-the-bar"></div>
+    </div>
+</div>
+
+<br /><br />
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Comments by gender</h3>
+    </div>
+    <div class="panel-body">
+        <p>The following chart shows the number of comments per category</p>
+        <canvas width="500" height="250" id="comments-by-gender"></canvas>
+    </div>
+</div>
+
+<a href="/"><h1>Go to home page</h1></a>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<script>
+
+    function drawBarChartWithCanvas(data) {
+        var canvas = document.querySelector("#comments-by-gender"),
+            context = canvas.getContext("2d");
+
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = canvas.width - margin.left - margin.right,
+            height = canvas.height - margin.top - margin.bottom;
+
+        var x = d3.scaleBand()
+            .rangeRound([0, width])
+            .padding(0.1);
+
+        var y = d3.scaleLinear()
+            .rangeRound([height, 0]);
+
+        context.translate(margin.left, margin.top);
+
+        x.domain(data.map(function (d) { return d.gender; }));
+        y.domain([0, d3.max(data, function (d) { return d.count; })]);
+
+
+        var yTickCount = 10,
+            yTicks = y.ticks(yTickCount);
+
+        context.beginPath();
+        x.domain().forEach(function (d) {
+            context.moveTo(x(d) + x.bandwidth() / 2, height);
+            context.lineTo(x(d) + x.bandwidth() / 2, height + 6);
+        });
+        context.strokeStyle = "black";
+        context.stroke();
+
+        context.textAlign = "center";
+        context.textBaseline = "top";
+        x.domain().forEach(function (d) {
+            context.fillText(d, x(d) + x.bandwidth() / 2, height + 6);
+        });
+
+        context.beginPath();
+        yTicks.forEach(function (d) {
+            context.moveTo(0, y(d) + 0.5);
+            context.lineTo(-6, y(d) + 0.5);
+        });
+        context.strokeStyle = "black";
+        context.stroke();
+
+        context.textAlign = "right";
+        context.textBaseline = "middle";
+        yTicks.forEach(function (d) {
+            context.fillText(d, -9, y(d));
+        });
+
+        context.beginPath();
+        context.moveTo(-6.5, 0 + 0.5);
+        context.lineTo(0.5, 0 + 0.5);
+        context.lineTo(0.5, height + 0.5);
+        context.lineTo(-6.5, height + 0.5);
+        context.strokeStyle = "black";
+        context.stroke();
+
+        context.save();
+        context.rotate(-Math.PI / 2);
+        context.textAlign = "right";
+        context.textBaseline = "top";
+        context.font = "bold 10px sans-serif";
+        context.fillText("Count", -10, -40);
+        context.restore();
+
+        //context.fillStyle = "steelblue";
+        data.forEach(function (d, i) {
+            context.fillStyle = d3.schemeCategory10[i];
+            context.fillRect(x(d.gender), y(d.count), x.bandwidth(), height - y(d.count));
+            context.fillStyle = "black";
+            context.fillText(d.count, x(d.gender),  y(d.count))
+        });
+
+    }
+
+    // draw a pie
+    function drawPie(jsonData) {
+
+        // height and width of the svg
+        var h = 200;
+        var w = 200;
+
+        // inner and outer radius of the pie
+        var innerRadius = w / 4;
+        var outerRadius = w / 2;
+
+        // generate pie as function to be called and handel data
+        var pie = d3.pie().value(function (d) {
+            return d.count;
+        });
+
+        // create the color schim, d3 does that for us, generates 10 scale ordnal
+        var color = d3.schemeCategory10;
+
+        // will be used to generate the path attribute
+        var arc = d3.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(outerRadius);
+
+        // create the svg canvas
+        var svg = d3.select('.pie')
+          .append('svg')
+          .attr('width', w)
+          .attr('height', h);
+
+        // set up groups of arcs
+        var arcs = svg.selectAll('g.arc')
+          .data(pie(jsonData))
+          .enter()
+          .append('g')
+          .attr('class', 'arc')
+          .attr('transform', 'translate(' + outerRadius + ', ' + outerRadius + ')')
+          .on("mouseover", function (d) {
+              d3.select('#tooltip')
+                .style("visibility", "visible")
+                  .text(d.data.gender);
+          })
+          .on("mousemove", function () {
+              d3.select('#tooltip')
+                .style("top", (event.pageY - 10) + "px")
+                .style("left", (event.pageX + 10) + "px");
+          })
+          .on("mouseout", function () {
+              d3.select('#tooltip')
+                .style("visibility", "hidden");
+          });
+
+        // add path to groups
+        arcs.append('path')
+          .attr('fill', function (d, i) {
+              return color[i];
+          })
+          .attr('d', arc);
+
+        // append text
+        arcs.append('text')
+          .attr("transform", function (d) {
+              return "translate(" + arc.centroid(d) + ")"; // get the center point of the shape
+          })
+          .attr("text-anchor", "middle")
+          .text(function (d) {
+              return d.value;
+          });
+
+    }
+
+    function drawBarChartWithSvg(jsonData) {
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = 700 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+
+        // set the ranges
+        var x = d3.scaleBand()
+                  .range([0, width])
+                  .padding(0.1);
+        var y = d3.scaleLinear()
+                  .range([height, 0]);
+
+        // get some color in
+        var color = d3.schemeCategory20;
+
+        // append the svg object to the body of the page
+        // append a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+        var svg = d3.select(".bar").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+        // Scale the range of the data in the domains
+        x.domain(jsonData.map(function (d) { return d.category; }));
+        y.domain([0, d3.max(jsonData, function (d) { return d.count; })]);
+
+        // append the rectangles for the bar chart
+        var bars =  svg.selectAll(".bar")
+             .data(jsonData)
+           .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) { return x(d.category
+                ); })
+             .attr("width", x.bandwidth())
+            .attr("y", function (d) { return y(d.count); })
+            .attr("height", function (d) { return height - y(d.count); })
+            .attr('fill', function (d, i) { return d3.schemeCategory10[i]; });
+
+        // add the x Axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        // add the y Axis
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 6)
+              .attr("dy", "-35px")
+              .text("Calories");
+    }
+
+
+    var prodcutsByCategory = JSON.parse('@Html.Raw(ViewBag.prodcutsByCategory)');
+    drawBarChartWithSvg(prodcutsByCategory);
+
+    var commentsByGender = JSON.parse('@Html.Raw(ViewBag.commentsByGender)');
+    drawBarChartWithCanvas(commentsByGender);
+
+    var usersByGender = JSON.parse('@Html.Raw(ViewBag.usersByGender)');
+    drawPie(usersByGender);
+
+
+</script>

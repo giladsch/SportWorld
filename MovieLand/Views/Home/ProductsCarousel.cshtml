@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Hydra.Models.Product>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <div class="carousel-inner" role="listbox">
+        @{
+            for (int i = 0; i < Model.Count(); i++)
+            {
+                <div class="@(@i == 0 ? "item active" : "item")">
+                    <img style="height: 350px;" src="@Model.ElementAt(i).ImageUrl" alt="@Model.ElementAt(i).Name" class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <kbd><a href="/Product/Details/@Model.ElementAt(i).ID" class="alert-link">@Model.ElementAt(i).Name</a></kbd>
+                    </div>
+                </div>
+            }
+        }
+
+
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@model Hydra.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title">Deleting @Html.DisplayFor(prd => prd.Name)</h3>
+    </div>
+    <div class="panel-body">
+        Are you sure you want to delete <strong>@Html.DisplayFor(prd => prd.Name)</strong>?
+        <form asp-action="Delete">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index" asp-controller="Catalog">Back to List</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 3038,
+    "Name": "Prince Charming",
+    "Price": 75.0,
+    "ImageUrl": "https://stashpedia.com/img/funko/1/small/prince-charming-270.jpg",
+    "Category": 4,
+    "Description": "Prince Charming figure"
+  },
+  {
+    "ID": 3040,
+    "Name": "Captain Hook",
+    "Price": 94.0,
+    "ImageUrl": "https://stashpedia.com/img/funko/1/small/captain-hook-272.jpg",
+    "Category": 4,
+    "Description": "Captain Hook figure"
+  },
+  {
+    "ID": 3028,
+    "Name": "Bran Stark",
+    "Price": 71.0,
+    "ImageUrl": "https://stashpedia.com/img/funko/5/small/bran-stark-7136-1.jpg",
+    "Category": 4,
+    "Description": "Bran Stark figure"
+  },
+  {
+    "ID": 3027,
+    "Name": "Yara Greyjoy",
+    "Price": 93.0,
+    "ImageUrl": "https://stashpedia.com/img/funko/5/small/yara-greyjoy-7135-1.jpg",
+    "Category": 4,
+    "Description": "Yara Greyjoy figure"
+  },
+  {
+    "ID": 3026,
+    "Name": "Lord Varys",
+    "Price": 92.0,
+    "ImageUrl": "https://stashpedia.com/img/funko/5/small/lord-varys-7134-1.jpg",
+    "Category": 4,
+    "Description": "Lord Varys figure"
+  }
+]

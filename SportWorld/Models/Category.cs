@@ -7,9 +7,9 @@ namespace SportWorld.Models
 {
     public enum Category
     {
-        DC = 1,
-        Marvel,
-        Movies,
-        TV
+        Basketball = 1,
+        Tennis,
+        Football,
+        Swimming
     }
 }

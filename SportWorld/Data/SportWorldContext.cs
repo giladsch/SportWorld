@@ -28,7 +28,7 @@ namespace SportWorld.Data
         {
             var telAviv = new Store
             {
-                Name = "Tel Aviv Pop",
+                Name = "Tel Aviv Store",
                 ClosingHour = "22:00",
                 OpeningHour = "12:00",
                 Latitude = 32.074031,
@@ -37,7 +37,7 @@ namespace SportWorld.Data
 
             var jerusalem = new Store
             {
-                Name = "Jerusalem Pop",
+                Name = "Jerusalem Store",
                 ClosingHour = "22:00",
                 OpeningHour = "12:00",
                 Latitude = 31.777820,
@@ -46,7 +46,7 @@ namespace SportWorld.Data
 
             var eilat = new Store
             {
-                Name = "Eilat Pop",
+                Name = "Eilat Store",
                 ClosingHour = "22:00",
                 OpeningHour = "12:00",
                 Latitude = 29.556008,

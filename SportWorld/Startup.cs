@@ -13,31 +13,27 @@ using SportWorld.Models;
 
 namespace SportWorld
 {
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
-		public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
-		{
-			services.AddMvc();
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
 
-            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("SportWorldContext"));
-            //{
-            //    Password = Configuration["Secret:DbPassword"]
-            //};
             services.AddDbContext<SportWorldContext>(options =>
-                                                options.UseSqlServer(builder.ConnectionString));
+                options.UseSqlServer(new SqlConnectionStringBuilder(Configuration.GetConnectionString("SportWorldContext")).ConnectionString));
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddSingleton<ISecretSettings>(
-                new SecretSettings(Configuration["Secret:MapCredantials"], 
+                new SecretSettings(Configuration["Secret:MapCredantials"],
                                    Configuration["Secret:DbPassword"],
                                    Configuration["Secret:WeatherKey"]));
 
@@ -52,17 +48,17 @@ namespace SportWorld
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-		{ 
-			if (env.IsDevelopment())
-			{
+        {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
-			app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseSession();
 
@@ -73,11 +69,11 @@ namespace SportWorld
                 .AllowCredentials());
 
             app.UseMvc(routes =>
-			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
-			});
-		}
-	}
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+    }
 }

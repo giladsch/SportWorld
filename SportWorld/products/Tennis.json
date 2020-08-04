@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 7000,
+    "Name": "Tennis balls",
+    "Price": 90.0,
+    "ImageUrl": "https://www.airsystems-inc.com/wp-content/uploads/2017/09/TennisBallsRubber-Air-Systems-Inc.jpeg",
+    "Category": 2,
+    "Description": "Tennis balls"
+  },
+  {
+    "ID": 7001,
+    "Name": "Racket",
+    "Price": 150.0,
+    "ImageUrl": "https://nwscdn.com/media/catalog/product/v/e/vermont-colt-is-a-tennis-racket-for-all-ages-to-enjoy_1.jpg",
+    "Category": 2,
+    "Description": "Tennis racket"
+  },
+  {
+    "ID": 7002,
+    "Name": "Racket cover",
+    "Price": 350.0,
+    "ImageUrl": "https://www.doittennis.com/media/products/head-youtek-racquet-cover.jpg",
+    "Category": 2,
+    "Description": "Tennis racket cover"
+  },
+  {
+    "ID": 7003,
+    "Name": "Tennis hat",
+    "Price": 70.0,
+    "ImageUrl": "https://m.media-amazon.com/images/I/61UEf0OiH9L._SR500,500_.jpg",
+    "Category": 2,
+    "Description": "Tennis hat"
+  },
+  {
+    "ID": 7004,
+    "Name": "Ball basket",
+    "Price": 45.0,
+    "ImageUrl": "https://nwscdn.com/media/wysiwyg/3kf/tennis/Tennis_Ball_Basket_For_Easy_Tennis_Ball_Collection.jpg",
+    "Category": 2,
+    "Description": "Tennis ball basket"
+  }
+]

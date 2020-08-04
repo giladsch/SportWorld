@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 6000,
+    "Name": "Barcelona T-shirt",
+    "Price": 125.0,
+    "ImageUrl": "https://cdna.lystit.com/1200/630/tr/photos/harrods/975a8002/nike-Blue-Barcelona-Fc-Home-Football-T-shirt.jpeg",
+    "Category": 3,
+    "Description": "Men's Blue Barcelona Fc Home Football T-shirt"
+  },
+  {
+    "ID": 6001,
+    "Name": "Football Pants",
+    "Price": 80.0,
+    "ImageUrl": "https://w7.pngwing.com/pngs/899/846/png-transparent-fc-barcelona-fcbotiga-bm-granollers-jersey-pants-fc-barcelona.png",
+    "Category": 3,
+    "Description": "Men's barcelona football pants"
+  },
+  {
+    "ID": 6002,
+    "Name": "Football shoes",
+    "Price": 350.0,
+    "ImageUrl": "https://contents.mediadecathlon.com/p1204268/k$d67de33116182c4eb9e84f7d347c49df/agility-100-fg-.jpg?&f=800x800",
+    "Category": 3,
+    "Description": "Football shoes"
+  },
+  {
+    "ID": 6003,
+    "Name": "Socker ball",
+    "Price": 55.0,
+    "ImageUrl": "https://a.espncdn.com/photo/2020/0319/r681030_1296x729_16-9.jpg",
+    "Category": 3,
+    "Description": "Nike socker ball"
+  },
+  {
+    "ID": 6004,
+    "Name": "Socks",
+    "Price": 30.0,
+    "ImageUrl": "https://www.directsoccer.co.uk/upload/img/747x856/1458563962-37738000.jpg",
+    "Category": 3,
+    "Description": "Football socks"
+  }
+]

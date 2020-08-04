@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 5000,
+    "Name": "Goggles",
+    "Price": 25.0,
+    "ImageUrl": "https://img.fruugo.com/product/8/88/90806888_max.jpg",
+    "Category": 4,
+    "Description": "Swimming goggles"
+  },
+  {
+    "ID": 5001,
+    "Name": "noodle",
+    "Price": 15.0,
+    "ImageUrl": "https://www.snopes.com/tachyon/2018/06/pool_noodle.jpg",
+    "Category": 4,
+    "Description": "Pool Noodle"
+  },
+  {
+    "ID": 5002,
+    "Name": "Ring float",
+    "Price": 30.0,
+    "ImageUrl": "https://ae01.alicdn.com/kf/HTB1U9Hqqx9YBuNjy0Ffq6xIsVXaD/110cm-Inflatable-Donut-Swimming-Ring-Giant-Pool-Float-Toys-Circle-Beach-Sea-Party-Inflatable-Ride-on.jpg_640x640.jpg",
+    "Category": 4,
+    "Description": "Donut-shaped ring float"
+  },
+  {
+    "ID": 5003,
+    "Name": "Swimwear",
+    "Price": 55.0,
+    "ImageUrl": "https://lacasitadedaniela.com/12723-large_default/super-wings-girls-swimsuit-swimwear.jpg",
+    "Category": 4,
+    "Description": "Swimwear for girls"
+  },
+  {
+    "ID": 5004,
+    "Name": "Swim hat",
+    "Price": 10.0,
+    "ImageUrl": "https://dunnes.btxmedia.com/pws/client/images/catalogue/products/6275216/zoom/6275216_pink.jpg",
+    "Category": 4,
+    "Description": "Swim hat for girls"
+  }
+]

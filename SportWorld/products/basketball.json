@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 8000,
+    "Name": "Basketball",
+    "Price": 110.0,
+    "ImageUrl": "https://cdn11.bigcommerce.com/s-2sxhiat0li/images/stencil/1280x1280/products/182/588/GL7X_AD__99451.1461966775.jpg?c=2&imbypass=on",
+    "Category": 1,
+    "Description": "Molten basketball"
+  },
+  {
+    "ID": 8001,
+    "Name": "Lackers t-shirt",
+    "Price": 120.0,
+    "ImageUrl": "https://cdn.shopify.com/s/files/1/0356/7140/8777/products/61hAf6A71DL._AC_UX679_800x.jpg?v=1584669583",
+    "Category": 1,
+    "Description": "James' Lackers t-shirt - 23"
+  },
+  {
+    "ID": 8002,
+    "Name": "Basketball Pants",
+    "Price": 350.0,
+    "ImageUrl": "https://image.made-in-china.com/202f0j00eyAtwVdrcFzn/Just-Don-Lakers-Shorts-Basketball-Pants-Swingman-Shorts.jpg",
+    "Category": 1,
+    "Description": "Lackers basketball pants"
+  },
+  {
+    "ID": 8003,
+    "Name": "Baketball Shoes",
+    "Price": 340.0,
+    "ImageUrl": "https://440345-1379246-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/Screen-Shot-2020-02-27-at-3.27.56-pm.jpg",
+    "Category": 1,
+    "Description": "Nike Basketball shoes"
+  },
+  {
+    "ID": 8004,
+    "Name": "Basket",
+    "Price": 55.0,
+    "ImageUrl": "https://www.keepergoals.com/wp-content/uploads/2017/02/hdflexgs-heavy-duty-flex-basketball-rim.jpg",
+    "Category": 1,
+    "Description": "Basketball basket"
+  }
+]

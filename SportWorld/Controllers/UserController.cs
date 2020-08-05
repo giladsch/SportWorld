@@ -209,6 +209,10 @@ namespace SportWorld.Controllers
             }
             else
             {
+                if(user.Password != password)
+                {
+                    return RedirectToAction("Index", "Error", new { error = "username or password wrong" });
+                }
                 SetUserInSession(user.UserName, user.IsAdmin);
                 return RedirectToAction("Index", "Home");
             }

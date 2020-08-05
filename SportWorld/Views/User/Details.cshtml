@@ -8,21 +8,24 @@
 <h2>All users that are registered</h2>
 <table class="table table-bordered table-responsive table-hover table-stripedk">
     <tr>
-        <th>User Id</th>
-        <th>Name</th>
+        <th>UserName</th>
+        <th>Email</th>
         <th>Gender</th>
         <th></th>
         <th></th>
     </tr>
     @foreach (var user in Model)
     {
-        <tr>
-            <td>@user.ID</td>
-            <td>@user.Name</td>
-            <td>@user.Gender</td>
-            <td> @Html.ActionLink("Edit", "Edit", "User", new { id = user.ID })</td>
-            <td> @Html.ActionLink("Delete", "Delete", "User", new { id = user.ID })</td>
-        </tr>
+        if (!user.IsDeleted)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.Gender</td>
+                <td> @Html.ActionLink("Edit", "Edit", "User", new { username = user.UserName })</td> |
+                <td> @Html.ActionLink("Delete", "Delete", "User", new { username = user.UserName })</td>
+            </tr>
+        }
     }
 </table>
 

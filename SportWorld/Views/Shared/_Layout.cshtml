@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,15 +37,34 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="About" asp-action="Index">About</a></li>
                     <li><a asp-area="" asp-controller="Catalog" asp-action="Index">Catalog</a></li>
-                    <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                    @* <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li> *@
+
+                    @{
+                        if (string.IsNullOrWhiteSpace(Context.Session.GetString("ConnectedUserId")))
+                        {
+                            <li><a asp-area="" asp-controller="User" asp-action="Login">Login</a></li>
+                            <li><a asp-area="" asp-controller="User" asp-action="Create">Register</a></li>
+                        }
+                        else
+                        {
+                            if (Context.Session.GetString("IsAdminConnected") == "true")
+                            {
+                                <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                            }
+                            <li><a asp-area="" asp-controller="User" asp-action="Logout">Logout</a></li>
+                        }
+                    }
                 </ul>
-                <div style="float: right" class="fb-login-button navbar-brand" data-max-rows="1"
-                     data-size="medium" data-button-type="continue_with" data-show-faces="false"
-                     data-auto-logout-link="true" data-use-continue-as="false"
-                     onlogin="checkLoginState()"></div>
+
+
+                @*<div style="float: right" class="fb-login-button navbar-brand" data-max-rows="1"
+                    data-size="medium" data-button-type="continue_with" data-show-faces="false"
+                    data-auto-logout-link="true" data-use-continue-as="false"
+                    onlogin="checkLoginState()"></div>*@
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

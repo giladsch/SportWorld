@@ -14,7 +14,7 @@
         }
         else
         {
-            <h2>No products Match</h2>
+            <h2>No products found</h2>
         }
     }
     else
@@ -25,19 +25,22 @@
 
 @{
     <table>
-        @{ for (int row = 0; row < Model.Count() / 3; row++)
+        @{ for (int row = 0; row < Math.Ceiling(Model.Count() / 3m); row++)
             {
                 <tr class="row">
                     @{ for (int col = 0; col < 3; col++)
                         {
-                            Product currProduct = Model.ElementAt(row * 3 + col);
+                            if (row * 3 + col < Model.Count())
+                            {
+                                Product currProduct = Model.ElementAt(row * 3 + col);
 
-                            <td class="column">
-                                <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">
-                                <p>
-                                    @Html.ActionLink(currProduct.Name, "Details", "Product", new { id = currProduct.ID })
-                                </p>
-                            </td>
+                                <td class="column">
+                                    <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">
+                                    <p>
+                                        @Html.ActionLink(currProduct.Name, "Details", "Product", new { id = currProduct.ID })
+                                    </p>
+                                </td>
+                            }
                         }
                     }
                 </tr>

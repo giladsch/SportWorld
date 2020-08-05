@@ -17,13 +17,13 @@ namespace SportWorld.DAL
             _SportWorldContext = SportWorldContext;
         }
 
-        public IEnumerable<Comment> GetByUserIdInDateRange(DateTime start, DateTime end, string userId)
+        public IEnumerable<Comment> GetByUserIdInDateRange(DateTime start, DateTime end, string username)
         {
             var comments = _SportWorldContext.Comment
                 .Include(usr => usr.Publisher)
                 .Where(c => c.Date >= start &&
                        c.Date <= end &&
-                       c.Publisher.ID == userId);
+                       c.Publisher.UserName == username);
             return comments;
         }
     }

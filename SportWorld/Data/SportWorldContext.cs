@@ -8,11 +8,11 @@ using System;
 
 namespace SportWorld.Data
 {
-	public class SportWorldContext : DbContext
-	{
-		public SportWorldContext(DbContextOptions<SportWorldContext> options)
-			: base(options)
-		{
+    public class SportWorldContext : DbContext
+    {
+        public SportWorldContext(DbContextOptions<SportWorldContext> options)
+            : base(options)
+        {
             if (Database.EnsureCreated())
             {
                 InitializeProducts(this);
@@ -53,19 +53,37 @@ namespace SportWorld.Data
                 Lontitude = 34.961806
             };
 
-            var meirav = new User
-            {
-                Gender = Gender.Female,
-                Name = "Meirav Shenhar"
-            };
-
-            var gal = new User
+            var Gilad = new User
             {
                 Gender = Gender.Male,
-                Name = "Gal Hen"
+                UserName = "giladsch",
+                Email = "12345@gmail.com",
+                Password = "admin",
+                IsAdmin = true,
+                IsDeleted = false
             };
 
-            SportWorldContext.User.AddRange(meirav, gal);
+            var Adi = new User
+            {
+                Gender = Gender.Female,
+                UserName = "adihahamov",
+                Email = "1234@gmail.com",
+                Password = "admin",
+                IsAdmin = false,
+                IsDeleted = false
+            };
+
+            var Noy = new User
+            {
+                Gender = Gender.Female,
+                UserName = "noy98",
+                Email = "123@gmail.com",
+                Password = "admin",
+                IsAdmin = false,
+                IsDeleted = false
+            };
+
+            SportWorldContext.User.AddRange(Gilad, Adi, Noy);
             SportWorldContext.Store.AddRange(telAviv, jerusalem, eilat);
 
             var fileEntries = Directory.GetFiles("./products");
@@ -73,7 +91,7 @@ namespace SportWorld.Data
             {
                 var json = File.ReadAllText(fileName);
                 var figures = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
-                
+
                 var figuresNoId = figures.Select(x => new Product
                 {
                     Name = x.Name,
@@ -81,15 +99,15 @@ namespace SportWorld.Data
                     ImageUrl = x.ImageUrl,
                     Category = x.Category,
                     Description = x.Description,
-                    Comments = (x.Price < 83 && x.Price > 80) ?
+                    Comments = (x.Price < 150 && x.Price > 0) ?
                             new List<Comment>{ new Comment{
-                                    Publisher = x.Price % 2 == 0 ? meirav : gal,
+                                    Publisher = x.Price % 3 == 0 ? Gilad : x.Price % 3 == 1 ? Adi : Noy,
                                     Date = DateTime.Now.AddDays(-1),
                                     Text = $"{x.Name} is the greatest!"
                             }} : null
-                });               
+                });
 
-                Product.AddRange(figuresNoId);                
+                Product.AddRange(figuresNoId);
             }
             SportWorldContext.SaveChanges();
         }

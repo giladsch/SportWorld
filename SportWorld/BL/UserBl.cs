@@ -15,12 +15,17 @@ namespace SportWorld.BL
             _userDal = new UserDataAccess(context);
         }
 
-        public void AddUser(string id, string name, Gender gender)
+        public void AddUser(User user)
         {
-            if (_userDal.IsUserExist(id))
+            if (_userDal.IsUserExist(user.UserName))
                 return;
 
-            _userDal.AddUser(id, name, gender);
+            _userDal.AddUser(user);
+        }
+
+        public bool IsUserExist(string username)
+        {
+            return _userDal.IsUserExist(username);
         }
 
         public void UpdateUser(User user)
@@ -33,9 +38,9 @@ namespace SportWorld.BL
             _userDal.DeletUser(user);
         }
 
-        public User GetById(string id)
+        public User GetById(string username)
         {
-            return _userDal.GetUser(id);
+            return _userDal.GetUser(username);
         }
 
         public List<User> GetAllUsers()

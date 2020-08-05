@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SportWorld.Controllers
 {
-    public class UserController: Controller
+    public class UserController : Controller
     {
         private readonly UserBl _userBl;
 
@@ -18,22 +18,17 @@ namespace SportWorld.Controllers
 
         public ActionResult Create()
         {
-            if (!IsAdminConnected())
-            {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
-            }
-
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, [Bind("ID", "Name", "Gender")] User user)
+        public ActionResult Create(int id, [Bind("Gender", "UserName", "Password", "Email")] User user)
         {
             try
             {
-                var errorMessage = GetErrorIfInvalid(user);
+                var errorMessage = GetErrorIfInvalid(user,true);
 
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
@@ -42,34 +37,38 @@ namespace SportWorld.Controllers
 
                 var userToAdd = new User
                 {
-                    ID = user.ID,
-                    Name = user.Name,
-                    Gender = user.Gender
+                    Gender = user.Gender,
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Email = user.Email,
+                    IsAdmin = false
                 };
 
-                _userBl.AddUser(user.ID, user.Name, user.Gender);
+                _userBl.AddUser(userToAdd);
+                SetUserInSession(userToAdd.UserName, user.IsAdmin);
 
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "About");
+
             }
             catch
             {
                 return RedirectToAction("Index", "Error");
             }
-        } 
+        }
 
         // GET: User/Edit/
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string UserName)
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
             try
             {
-                User user = _userBl.GetById(id);
+                User user = _userBl.GetById(UserName);
                 if (user == null)
                 {
-                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", id) });
+                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", UserName) });
                 }
 
                 return View(user);
@@ -80,29 +79,30 @@ namespace SportWorld.Controllers
             }
         }
 
-        // POST: User/Edit/5
+        // POST: User/Edit/name
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("ID", "Name", "Gender")] User user)
+        public ActionResult Edit(string username, [Bind("Gender", "UserName", "Email")] User user)
         {
             try
             {
-                var errorMessage = GetErrorIfInvalid(user);
+                var errorMessage = GetErrorIfInvalid(user,false);
 
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     return RedirectToAction("Index", "Error", new { error = errorMessage });
                 }
 
-                User userToEdit = _userBl.GetById(user.ID);
+                User userToEdit = _userBl.GetById(username);
 
                 if (userToEdit == null)
                 {
-                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", id) });
+                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with username {0}", username) });
                 }
 
-                userToEdit.Name = user.Name;
                 userToEdit.Gender = user.Gender;
+                userToEdit.UserName = user.UserName;
+                userToEdit.Email = user.Email;
 
                 _userBl.UpdateUser(userToEdit);
 
@@ -115,19 +115,19 @@ namespace SportWorld.Controllers
         }
 
         // GET: User/Delete/
-        public ActionResult Delete(String id)
+        public ActionResult Delete(string username)
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
 
             try
             {
-                User user = _userBl.GetById(id);
+                User user = _userBl.GetById(username);
                 if (user == null)
                 {
-                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", id) });
+                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with username {0}", username) });
                 }
                 return View(user);
             }
@@ -140,25 +140,25 @@ namespace SportWorld.Controllers
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public ActionResult Delete(string username, IFormCollection collection)
         {
             try
             {
-                User userToDelete = _userBl.GetById(id);
+                User userToDelete = _userBl.GetById(username);
                 try
                 {
                     _userBl.DeleteUser(userToDelete);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", id) });
+                    return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", username) });
                 }
 
                 return RedirectToAction("Details", "User");
             }
             catch
             {
-                return RedirectToAction("Index", "Error", new { error = string.Format("Oops! failed to delete product with id {0}", id) });
+                return RedirectToAction("Index", "Error", new { error = string.Format("Oops! failed to delete product with id {0}", username) });
             }
         }
 
@@ -166,63 +166,91 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to view users data. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to view users data." });
             }
 
             return View(_userBl.GetAllUsers());
         }
 
-        private string GetErrorIfInvalid(User user)
+        private string GetErrorIfInvalid(User user,bool shouldCheckUsername)
         {
             var error = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(user.Name))
+            if (string.IsNullOrWhiteSpace(user.UserName))
             {
                 error = "user name cant be empty or null";
+            }
+            if (shouldCheckUsername && _userBl.IsUserExist(user.UserName))
+            {
+                error = "user name already exist";
             }
 
             if (user.Gender.ToString().Length < 1)
             {
                 error = "Please Select Gender";
             }
-            
+
             return error;
         }
 
         [HttpGet]
-        public void Login(string id, string name)
+        public ActionResult Login()
         {
-            _userBl.AddUser(id, name, GetRandom());
-
-            SetUserInSession(id);
+            return View();
         }
+
+        [HttpPost]
+        public ActionResult ValidateLogin(string username, string password)
+        {
+            var user = _userBl.GetById(username);
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Error", new { error = "User dosent exist" });
+            }
+            else
+            {
+                SetUserInSession(user.UserName, user.IsAdmin);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+        //[HttpGet]
+        //public ActionResult Register(string id, string name)
+        //{
+        //    _userBl.AddUser(id, name, GetRandom());
+
+        //    SetUserInSession(id);
+        //}
 
         [HttpGet]
-        public void Logout()
+        public ActionResult Logout()
         {
-            SetUserInSession();
+            SetUserInSession("", false);
+            return RedirectToAction("Index", "Home");
         }
 
-        private void SetUserInSession(string id = "")
+        private void SetUserInSession(string username, bool isAdmin)
         {
-            HttpContext.Session.SetString("ConnectedUserId", id);
+
+            HttpContext.Session.SetString("IsAdminConnected", isAdmin.ToString().ToLower());
+            HttpContext.Session.SetString("ConnectedUserId", username);
         }
 
         private Gender GetRandom()
         {
             var num = new Random().Next(1, 4);
 
-            return num == 1 
+            return num == 1
                 ? Gender.Male
-                : num == 2 
-                    ? Gender.Female 
+                : num == 2
+                    ? Gender.Female
                     : Gender.Other;
         }
 
         private bool IsAdminConnected()
         {
-            var isAdminConnected = HttpContext.Session.GetInt32("IsAdminConnected") ?? 0;
-            return isAdminConnected == 1 ? true : false;
+            return HttpContext.Session.GetString("IsAdminConnected") == "true" ? true : false;
         }
     }
 }

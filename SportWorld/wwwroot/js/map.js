@@ -44,7 +44,7 @@ function showStores(stores) {
                     store.lontitude, store.latitude)} km</td></tr>`,
                 `<tr><td>Temprature: ${temp} °C</tr>`,
                 `<tr><td>Opening Hours: ${store.openingHour}-${store.closingHour}</tr>`,
-                `<tr><td><a href="/Store/Edit/${store.id}">Edit</a><a href="/Store/Delete/${store.id}">Delete</a></td></tr>`,
+                `<tr><td><a href="/Store/Edit/${store.id}">Edit</a> | <a href="/Store/Delete/${store.id}">Delete</a></td></tr>`,
                 `</table>`,
             ].join('');
         });

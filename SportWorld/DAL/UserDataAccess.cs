@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SportWorld.Data;
 using SportWorld.Models;
 
@@ -16,14 +17,9 @@ namespace SportWorld.DAL
             _context = context;
         }
 
-        public void AddUser(string id, string name, Gender gender)
+        public void AddUser(User user)
         {
-             _context.User.Add(new User
-            {
-                ID = id,
-                Name = name,
-                Gender = gender
-            });
+            _context.User.Add(user);
 
             _context.SaveChanges();
         }
@@ -36,28 +32,30 @@ namespace SportWorld.DAL
 
         public void DeletUser(User user)
         {
-            var  userToDelete = _context
+            var userToDelete = _context
                 .User
-                .SingleOrDefault(u => u.ID == user.ID);
+                .SingleOrDefault(u => u.UserName == user.UserName);
 
             if (userToDelete == null)
             {
                 throw new
-                    Exception(string.Format("could not find user with id {0}", user.ID));
+                    Exception(string.Format("could not find user with userName {0}", user.UserName));
             }
 
-            _context.User.Remove(userToDelete);
+            userToDelete.IsDeleted = true;
+
+            _context.User.Update(user);
             _context.SaveChanges();
         }
 
-        public bool IsUserExist(string id)
+        public bool IsUserExist(string username)
         {
-            return _context.User.Any(u => u.ID == id);
+            return _context.User.Any(u => u.UserName == username);
         }
 
-        public User GetUser(string id) 
+        public User GetUser(string username)
         {
-            return _context.User.FirstOrDefault(u => u.ID == id);
+            return _context.User.FirstOrDefault(u => u.UserName == username);
         }
 
         public List<User> GetAllUsers()

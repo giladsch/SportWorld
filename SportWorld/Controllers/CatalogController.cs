@@ -50,7 +50,7 @@ namespace SportWorld.Controllers
         public ActionResult Predict(string name)
         {
             Category? category = _productBl.NaiveBayesFetchCategoryByName(name);
-            if(category.HasValue)
+            if (category.HasValue)
             {
                 ViewBag.productName = name;
                 ViewBag.category = category;
@@ -65,81 +65,6 @@ namespace SportWorld.Controllers
         public ActionResult Index()
         {
             return View(_productBl.GetAllProducts());
-        }
-
-        // GET: Catalog/Details/
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Catalog/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Catalog/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Catalog/Edit/
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Catalog/Edit/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Catalog/Delete/
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Catalog/Delete/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -3,15 +3,20 @@
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var param = new Dictionary<string, string>
+    {
+                { "username", Model.UserName },
+            };
 }
 
 <div class="panel panel-danger">
     <div class="panel-heading">
-        <h1 class="panel-title">Deleting @Html.DisplayFor(user => user.Name)</h1>
+        <h1 class="panel-title">Deleting @Html.DisplayFor(user => user.UserName)</h1>
     </div>
     <div class="panel-body">
-        Are you sure you want to delete <strong>@Html.DisplayFor(user => user.Name)</strong>?
-        <form asp-action="Delete">
+        Are you sure you want to delete <strong>@Html.DisplayFor(user => user.UserName)</strong>?
+        <form asp-action="Delete" asp-all-route-data="param">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
             <a asp-action="Details" asp-controller="User">Back to List</a>
         </form>

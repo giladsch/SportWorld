@@ -43,7 +43,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
 
             return View();
@@ -77,7 +77,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
             try
             {
@@ -123,7 +123,7 @@ namespace SportWorld.Controllers
                 storeToEdit.ClosingHour = store.ClosingHour;
 
                 _storeBl.UpdateStore(storeToEdit);
-                return View(storeToEdit);
+                return  RedirectToAction("Index", "About");
             }
             catch
             {
@@ -136,7 +136,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
 
             try
@@ -214,8 +214,7 @@ namespace SportWorld.Controllers
 
         private bool IsAdminConnected()
         {
-            var isAdminConnected = HttpContext.Session.GetInt32("IsAdminConnected") ?? 0;
-            return isAdminConnected == 1 ? true : false;
+            return HttpContext.Session.GetString("IsAdminConnected") == "true" ? true : false;
         }
     }
 }

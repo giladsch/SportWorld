@@ -25,9 +25,9 @@ namespace SportWorld.Controllers
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
-            ViewData["UserId"] =
-                HttpContext.Session.GetString("ConnectedUserId") ??
-                string.Empty;
+            ViewData["username"] =
+                 HttpContext.Session.GetString("ConnectedUserId") ??
+                 string.Empty;
 
             return View(_productBl.GetProductById(id));
         }
@@ -37,7 +37,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
 
             return View();
@@ -53,7 +53,7 @@ namespace SportWorld.Controllers
             {
                 var errorMessage = GetErrorIfInvalid(product);
 
-                if(!string.IsNullOrWhiteSpace(errorMessage))
+                if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     return RedirectToAction("Index", "Error", new { error = errorMessage });
                 }
@@ -82,7 +82,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
             try
             {
@@ -109,14 +109,14 @@ namespace SportWorld.Controllers
             {
                 var productToEdit = _productBl.GetProductById(id);
 
-                if(productToEdit == null)
+                if (productToEdit == null)
                 {
                     return RedirectToAction("Index", "Error", new { error = string.Format("Could not find product with id {0}", id) });
 
                 }
 
                 var errorMessage = GetErrorIfInvalid(product);
-                
+
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     return RedirectToAction("Index", "Error", new { error = errorMessage });
@@ -142,7 +142,7 @@ namespace SportWorld.Controllers
         {
             if (!IsAdminConnected())
             {
-                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit. please go to admin page" });
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
             }
 
             try
@@ -154,7 +154,7 @@ namespace SportWorld.Controllers
                 }
                 return View(product);
             }
-            catch 
+            catch
             {
                 return RedirectToAction("Index", "Error");
             }
@@ -213,8 +213,7 @@ namespace SportWorld.Controllers
 
         private bool IsAdminConnected()
         {
-            var isAdminConnected = HttpContext.Session.GetInt32("IsAdminConnected") ?? 0;
-            return isAdminConnected == 1 ? true : false;
+            return HttpContext.Session.GetString("IsAdminConnected") == "true" ? true : false;
         }
     }
 }

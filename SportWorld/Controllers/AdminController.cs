@@ -26,20 +26,20 @@ namespace SportWorld.Controllers
         public ActionResult Index()
         {
             
-            if(HttpContext.Session.GetInt32("IsAdminConnected") == 1)
+            if(IsAdminConnected())
             {
                 ViewBag.users = _userDataAccess.GetAllUsers();
                 return View();
             }
 
-            return View("Login");
+            return RedirectToAction("Index", "Error");
         }
 
-        public ActionResult Search(DateTime start, DateTime end, string userId)
+        public ActionResult Search(DateTime start, DateTime end, string username)
         {
             try
             {
-                var comments = _adminDataAccess.GetByUserIdInDateRange(start, end, userId);
+                var comments = _adminDataAccess.GetByUserIdInDateRange(start, end, username);
                 return View(comments);
             }
             catch
@@ -48,36 +48,9 @@ namespace SportWorld.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(IFormCollection form)
+        private bool IsAdminConnected()
         {
-            if (ModelState.IsValid)
-            {
-                var username = form["Username"].ToString() ?? string.Empty;
-                var password = form["Password"].ToString() ?? string.Empty;
-
-                if (username == _settings.UserName && password == _settings.Password)
-                {                    
-                    return UpdateAdminState(true);
-                }
-                    
-            }
-
-            ModelState.AddModelError("", "Invalid username or password!");
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Logout()
-        {
-            return UpdateAdminState(false);
-        }
-
-        private ActionResult UpdateAdminState(bool isConnected)
-        {
-            HttpContext.Session.SetInt32("IsAdminConnected", isConnected ? 1 : 0);
-            return RedirectToAction("Index", "Admin");
+            return HttpContext.Session.GetString("IsAdminConnected") == "true" ? true : false;
         }
     }
 }

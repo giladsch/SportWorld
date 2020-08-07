@@ -149,7 +149,7 @@ namespace SportWorld.Controllers
                 {
                     _userBl.DeleteUser(userToDelete);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with id {0}", username) });
                 }

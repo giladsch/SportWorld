@@ -1,32 +1,26 @@
 ﻿using SportWorld.DAL;
 using SportWorld.Data;
-using SportWorld.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System;
-using System.Linq;
 
 namespace SportWorld.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly AdminCredentials _settings;
         private readonly UserDataAccess _userDataAccess;
         private readonly AdminDataAccess _adminDataAccess;
 
-        public AdminController(IOptions<AppSettings> settings, SportWorldContext SportWorldContext)
+        public AdminController(SportWorldContext SportWorldContext)
         {
-            _settings = settings.Value.AdminCredentials;
             _adminDataAccess = new AdminDataAccess(SportWorldContext);
             _userDataAccess = new UserDataAccess(SportWorldContext);
         }
 
         public ActionResult Index()
         {
-            
-            if(IsAdminConnected())
+
+            if (IsAdminConnected())
             {
                 ViewBag.users = _userDataAccess.GetAllUsers();
                 return View();

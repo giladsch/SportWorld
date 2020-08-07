@@ -2,8 +2,8 @@
 
 function getMap() {
     map = new Microsoft.Maps.Map('#store-locations-map', {
-        zoom: 18,
-        center: new Microsoft.Maps.Location(32.078863, 34.794393)
+        zoom: 8,
+        center: new Microsoft.Maps.Location(31.7148747, 34.9275617)
     });
     performSearch();
     $('#search-btn').click(performSearch);
@@ -14,8 +14,9 @@ function getMap() {
 }
 
 function performSearch() {
+    var searchValue = $('#search-box')[0].value;
     $.ajax({
-        url: '/About/GetStoresByName?name=' + $('#search-box')[0].value,
+        url: `/About/GetStoresByName?name=${searchValue}`,
         type: 'GET',
     }).done(data => showStores(data))
       .fail(() => showErrorMsg('failed getting data'));
@@ -27,10 +28,12 @@ function showErrorMsg(msg) {
 }
 
 function showStores(stores) {
-    if (!stores || stores.length === 0)
+    if (!stores || stores.length === 0) {
+        $('#results-panel').html('<h1 class="fontStyle">No store found</h1>'); 
         return;
-
-    showStoresOnMap(stores);
+    }
+       
+    addStoresToMap(stores);
 
     window.navigator.geolocation.getCurrentPosition(userPosition => {
         const itemsPromises = stores.map(async (store, i) => {
@@ -61,18 +64,13 @@ function clearMap() {
     $('#results-panel').html(''); 
 }
 
-function showStoresOnMap(stores) {
-    const locations = stores.map(store => {
+function addStoresToMap(stores) {
+     stores.forEach(store => {
         const loc = new Microsoft.Maps.Location(store.latitude, store.lontitude);
         const pin = new Microsoft.Maps.Pushpin(loc);
         Microsoft.Maps.Events.addHandler(pin, 'click', () => window.location = `/Store/ById/${store.id}`);
         map.entities.push(pin);
-
-        return loc;
     });
-
-    const bounds = Microsoft.Maps.LocationRect.fromLocations(locations);
-    map.setView({bounds:bounds, padding: 100});
 }
 
 function zoomOnMap(lat, lon) {

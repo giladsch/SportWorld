@@ -30,12 +30,7 @@ namespace SportWorld
             services.AddDbContext<SportWorldContext>(options =>
                 options.UseSqlServer(new SqlConnectionStringBuilder(Configuration.GetConnectionString("SportWorldContext")).ConnectionString));
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
-            services.AddSingleton<ISecretSettings>(
-                new SecretSettings(Configuration["Secret:MapCredantials"],
-                                   Configuration["Secret:DbPassword"],
-                                   Configuration["Secret:WeatherKey"]));
+            services.AddSingleton(new Keys(Configuration["Keys:Map"],Configuration["Keys:Weather"]));
 
             services.AddDistributedMemoryCache();
 

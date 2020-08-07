@@ -14,19 +14,18 @@ namespace SportWorld.Controllers
     public class AboutController : Controller
     {
         private readonly StoreBl _storeBl;
-        private readonly ISecretSettings _secrets;
+        private readonly Keys _keys;
 
-        public AboutController(SportWorldContext SportWorldContext, [FromServices]ISecretSettings secrets)
+        public AboutController(SportWorldContext SportWorldContext, Keys keys)
         {
             _storeBl = new StoreBl(SportWorldContext);
-            _secrets = secrets;
+            _keys = keys;
         }
 
         public IActionResult Index()
         {
+            ViewData["Map"] = _keys.Map;
             ViewData["Message"] = "SportWorld";
-            ViewData["MapCredantials"] = _secrets.MapCredantials;
-
             return View();
         }
 
@@ -35,8 +34,8 @@ namespace SportWorld.Controllers
         {
             try
             {
-                return name == null 
-                    ? _storeBl.GetAllStores() 
+                return name == null
+                    ? _storeBl.GetAllStores()
                     : _storeBl.GetStoreByName(name);
             }
             catch
@@ -52,7 +51,7 @@ namespace SportWorld.Controllers
             {
                 try
                 {
-                    var tempUrl = $"http://api.openweathermap.org/data/2.5/weather?units=metric&lat={lat}&lon={lon}&APPID={_secrets.WeatherKey}";
+                    var tempUrl = $"http://api.openweathermap.org/data/2.5/weather?units=metric&lat={lat}&lon={lon}&APPID={_keys.Weather}";
                     var res = await client.GetAsync(tempUrl);
                     res.EnsureSuccessStatusCode();
                     var content = await res.Content.ReadAsStringAsync();

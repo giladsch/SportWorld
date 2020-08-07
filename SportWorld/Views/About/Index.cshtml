@@ -4,18 +4,14 @@
 @{
     ViewData["Title"] = "About";
 }
-    <h2>@ViewData["Title"]</h2>
-    <h3>@ViewData["Message"]</h3>
-
-    <p>
-        This is a great store. You should totally buy out products.
-    </p>   
+    <h2  class="fontStyle" >@ViewData["Title"]</h2>
+    <h3 class="fontStyle" >@ViewData["Message"]</h3>
 
     <div id="map-wrapper">
         <div class="side-panel">
             <div class="search-bar">
-                <input id="search-box" type="text" />
-                <input id="search-btn" type="button" value="Search" />
+                <input id="search-box" style="border-radius: 20px;" type="text" />
+                <input id="search-btn" style="background: #bdcddb; border-radius: 20px;" type="button" value="Search" />
             </div>
             <div id="results-panel"></div>
         </div>

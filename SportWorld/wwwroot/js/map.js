@@ -41,7 +41,7 @@ function showStores(stores) {
                 url: `/About/GetTemprature?lon=${store.lontitude}&lat=${store.latitude}`, 
                 type: 'GET' });
             return [
-                `<table class="listItem"><tr>`,
+                `<table class="listItem fontStyle"><tr>`,
                 `<td><span onclick="zoomOnMap(${store.latitude}, ${store.lontitude})" class="title">${store.name}</span></td></tr>`,
                 `<tr><td>Distance: ${distance(userPosition.coords.longitude, userPosition.coords.latitude, 
                     store.lontitude, store.latitude)} km</td></tr>`,

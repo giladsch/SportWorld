@@ -16,14 +16,11 @@ namespace SportWorld.DAL
             _SportWorldContext = SportWorldContext;
         }
 
-        public List<Product> GetAllProducts()
-        {
-            return _SportWorldContext
+        public List<Product> GetAllProducts() => _SportWorldContext
                 .Product
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Publisher)
                 .ToList();
-        }
 
         public Product GetProductById(int productId)
         {

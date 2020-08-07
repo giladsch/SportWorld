@@ -19,20 +19,20 @@
     }
     else
     {
-        <h2>All products in the catalog</h2>
+        <h2 class="fontStyle" style="display: flex; justify-content: center;">All products:</h2>
     }
 }
 
 @{
     <table>
-        @{ for (int row = 0; row < Math.Ceiling(Model.Count() / 3m); row++)
+        @{ for (int row = 0; row < Math.Ceiling(Model.Count() / 4m); row++)
             {
                 <tr class="row">
-                    @{ for (int col = 0; col < 3; col++)
+                    @{ for (int col = 0; col < 4; col++)
                         {
-                            if (row * 3 + col < Model.Count())
+                            if (row * 4 + col < Model.Count())
                             {
-                                Product currProduct = Model.ElementAt(row * 3 + col);
+                                Product currProduct = Model.ElementAt(row * 4 + col);
 
                                 <td class="column">
                                     <img class="product-item-img" src=@Html.DisplayFor(model => currProduct.ImageUrl) alt="img1">

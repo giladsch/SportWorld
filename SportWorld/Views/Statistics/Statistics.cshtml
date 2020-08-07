@@ -1,46 +1,55 @@
 ﻿<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 
-<div class="page-header">
-    <h1>Statistics for manager</h1>
+<div class="page-header"  style="
+    display: flex;
+    justify-content: center;
+">
+    <h1 style=" font-family: cursive; font-weight: bolder; color: #31386d;">Statistics for manager</h1>
 </div>
 
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Products by store</h3>
+<div style="display:flex">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Products by store</h3>
+        </div>
+        <div class="panel-body">
+            <p>The following pie shows the number of users according to their gender</p>
+            <p>Hover on the pie to see that gender</p>
+            <div class="pie"></div>
+            <p id="tooltip"></p>
+        </div>
     </div>
-    <div class="panel-body">
-        <p>The following pie shows the number of users according to their gender</p>
-        <p>Hover on the pie to see that gender</p>
-        <div class="pie"></div>
-        <p id="tooltip"></p>
+    <br /><br />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Products by category</h3>
+        </div>
+        <div class="panel-body">
+            <p>The following chart shows the number of item per category</p>
+            <div class="bar" id="statistics-the-bar"></div>
+        </div>
+    </div>
+
+    <br /><br />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Comments by gender</h3>
+        </div>
+        <div class="panel-body">
+            <p>The following chart shows the number of comments per category</p>
+            <canvas width="500" height="250" id="comments-by-gender"></canvas>
+        </div>
     </div>
 </div>
-<br /><br />
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Products by category</h3>
-    </div>
-    <div class="panel-body">
-        <p>The following chart shows the number of item per category</p>
-        <div class="bar" id="statistics-the-bar"></div>
-    </div>
-</div>
-
-<br /><br />
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Comments by gender</h3>
-    </div>
-    <div class="panel-body">
-        <p>The following chart shows the number of comments per category</p>
-        <canvas width="500" height="250" id="comments-by-gender"></canvas>
-    </div>
-</div>
-
-<a href="/"><h1>Go to home page</h1></a>
+<a href="/"><h1 class="fontStyle" style="        display: flex;
+        justify-content: center;
+        font-family: cursive;
+        font-weight: bolder;
+        color: #31386d;
+">Go to home page</h1></a>
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
 

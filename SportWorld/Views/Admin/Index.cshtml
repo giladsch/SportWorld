@@ -1,18 +1,21 @@
 ﻿
-<section class="fontStyle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr));grid-gap:1rem;margin:2rem 1rem">
-    <div class="alert alert-info" role="alert">
-        @Html.ActionLink("View statistics", "GetStatistics", "Statistics")
-    </div>
-    <div class="alert alert-danger" role="alert">
-        @Html.ActionLink("View users info", "Details", "User")
-    </div>
-    <div class="alert alert-success" role="alert">
-        @Html.ActionLink("Add products", "Create", "Product")
-    </div>
-    <div class="alert alert-warning" role="alert">
-        @Html.ActionLink("Add store", "Create", "Store")
-    </div>
-</section>
+    <section class="fontStyle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr));grid-gap:1rem;margin:2rem 1rem">
+        <div class="alert alert-info" role="alert">
+            @Html.ActionLink("View statistics", "GetStatistics", "Statistics")
+        </div>
+        <div class="alert alert-danger" role="alert">
+            @Html.ActionLink("View users info", "Details", "User")
+        </div>
+        <div class="alert alert-success" role="alert">
+            @Html.ActionLink("Add products", "Create", "Product")
+        </div>
+        <div class="alert alert-warning" role="alert">
+            @Html.ActionLink("Add store", "Create", "Store")
+        </div>
+        <div class="alert" role="alert">
+            @Html.ActionLink("View Comments", "Details", "Comment")
+        </div>
+    </section>
 
 <section>
     <h2>Search for users comments</h2>

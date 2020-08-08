@@ -43,20 +43,6 @@ namespace SportWorld.Controllers
             }
         }
 
-        public ActionResult Predict(string name)
-        {
-            Category? category = _productBl.NaiveBayesFetchCategoryByName(name);
-            if (category.HasValue)
-            {
-                ViewBag.productName = name;
-                ViewBag.category = category;
-
-                return View();
-            }
-
-            return RedirectToAction("Index", "Error", new { error = "Oops! search yeald no results" });
-        }
-
         // GET: Catalog
         public ActionResult Index()
         {

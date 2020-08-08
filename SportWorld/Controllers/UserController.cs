@@ -218,15 +218,6 @@ namespace SportWorld.Controllers
             }
         }
 
-
-        //[HttpGet]
-        //public ActionResult Register(string id, string name)
-        //{
-        //    _userBl.AddUser(id, name, GetRandom());
-
-        //    SetUserInSession(id);
-        //}
-
         [HttpGet]
         public ActionResult Logout()
         {

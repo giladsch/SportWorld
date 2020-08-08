@@ -10,13 +10,13 @@ namespace SportWorld.BL
 {
     public class CommentBl
     {
-        private readonly SportWorldContext _sportWorldContext;
+        private readonly CommentDataAccess _commentDal;
         private readonly ProductDataAccess _productDal;
         private readonly UserDataAccess _userDal;
 
         public CommentBl(SportWorldContext sportWorldContext)
         {
-            _sportWorldContext = sportWorldContext;
+            _commentDal = new CommentDataAccess(sportWorldContext);
             _productDal = new ProductDataAccess(sportWorldContext);
             _userDal = new UserDataAccess(sportWorldContext);
         }
@@ -37,28 +37,22 @@ namespace SportWorld.BL
 
         public Comment GetById(int commentId)
         {
-            return _sportWorldContext.Comment.Include(usr => usr.Publisher).First(c => c.ID == commentId);
+            return _commentDal.GetById(commentId);
         }
 
         public List<Comment> GetAll()
         {
-            return _sportWorldContext.Comment.Include(usr => usr.Publisher).ToList();
+            return _commentDal.GetAll();
         }
 
         public void Delete(int commentId)
         {
-            var allProduct = _productDal.GetAllProducts();
-
-            var comment = _sportWorldContext.Comment.First(c => c.ID == commentId);
-
-            _sportWorldContext.Comment.Remove(comment);
-            _sportWorldContext.SaveChanges();
+            _commentDal.Delete(commentId);
         }
 
-        public void UpdateProduct(Comment comment)
+        public void Update(Comment comment)
         {
-            _sportWorldContext.Comment.Update(comment);
-            _sportWorldContext.SaveChanges();
+            _commentDal.Update(comment);
         }
     }
 }

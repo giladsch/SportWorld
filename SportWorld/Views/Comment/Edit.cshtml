@@ -1,0 +1,55 @@
+﻿@model SportWorld.Models.Comment
+@{
+    var param = new Dictionary<string, string>
+{
+                { "id", Model.ID.ToString() }
+       };
+}
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-all-route-data="param">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">User name</label>
+                <select name="username" class="form-control">
+                    @foreach (var user in ViewBag.users as IEnumerable<User>)
+                    {
+                        if (Model.Publisher.UserName == user.UserName)
+                        {
+                            <option value="@user.UserName" selected>@user.UserName</option>
+                        }
+                        else
+                        {
+                            <option value="@user.UserName">@user.UserName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control">@Model.Text </textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input  asp-for="Rating" type="number" min="0" max="10" value="@Model.Rating" step="0.1" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="Details" asp-controller="Comment">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-controller="Comment">Back to List</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>

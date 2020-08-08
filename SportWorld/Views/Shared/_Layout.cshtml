@@ -47,6 +47,7 @@
                         }
                         else
                         {
+                            <li><a asp-area="" asp-controller="Recommendation" asp-action="Index">Recommendation</a></li>
                             if (Context.Session.GetString("IsAdminConnected") == "true")
                             {
                                 <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
@@ -55,12 +56,6 @@
                         }
                     }
                 </ul>
-
-
-                @*<div style="float: right" class="fb-login-button navbar-brand" data-max-rows="1"
-                    data-size="medium" data-button-type="continue_with" data-show-faces="false"
-                    data-auto-logout-link="true" data-use-continue-as="false"
-                    onlogin="checkLoginState()"></div>*@
             </div>
         </div>
     </nav>

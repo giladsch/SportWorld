@@ -19,7 +19,7 @@ namespace SportWorld.Controllers
         [HttpPost]
         public ActionResult Add(IFormCollection form)
         {
-            _commentBl.Add(form["ProductId"], form["Comment"], HttpContext.Session.GetString("ConnectedUserId"));
+            _commentBl.Add(form["ProductId"], form["Comment"], HttpContext.Session.GetString("ConnectedUserId"), double.Parse(form["Rating"]));
 
             return RedirectToAction("Details", "Product", new { id = form["ProductId"] });
         }

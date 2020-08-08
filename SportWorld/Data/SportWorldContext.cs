@@ -90,26 +90,39 @@ namespace SportWorld.Data
             foreach (string fileName in fileEntries)
             {
                 var json = File.ReadAllText(fileName);
-                var figures = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
+                var productsFromJson = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
 
-                var figuresNoId = figures.Select(x => new Product
+                var productsFromCategory = productsFromJson.Select(x => new Product
                 {
                     Name = x.Name,
                     Price = x.Price,
                     ImageUrl = x.ImageUrl,
                     Category = x.Category,
                     Description = x.Description,
-                    Comments = (x.Price < 150 && x.Price > 0) ?
-                            new List<Comment>{ new Comment{
-                                    Publisher = x.Price % 3 == 0 ? Gilad : x.Price % 3 == 1 ? Adi : Noy,
-                                    Date = DateTime.Now.AddDays(-1),
-                                    Text = $"{x.Name} is the greatest!"
-                            }} : null
+                    Comments = (x.Price < 150 && x.Price > 0) ? commentToAdd(true, x.Price, x.Name, Gilad, Adi, Noy) : commentToAdd()
                 });
 
-                Product.AddRange(figuresNoId);
+                Product.AddRange(productsFromCategory);
             }
             SportWorldContext.SaveChanges();
+        }
+
+        private List<Comment> commentToAdd(bool addComments = false, double price = 0, string name = "", User Gilad = null, User Adi = null, User Noy = null)
+        {
+            if (!addComments) return null;
+            double numOfComments = price % 3 == 0 ? 3 : price % 3;
+            List<Comment> comments = new List<Comment>();
+            for (int i = 0; i < numOfComments; i++)
+            {
+                comments.Add(new Comment
+                {
+                    Publisher = i % 3 == 0 ? Gilad : i % 3 == 1 ? Adi : Noy,
+                    Date = DateTime.Now.AddDays(-1),
+                    Text = $"{name} is the greatest!",
+                    Rating = price % 10
+                }); 
+            }
+            return comments;
         }
     }
 }

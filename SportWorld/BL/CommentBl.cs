@@ -15,13 +15,15 @@ namespace SportWorld.BL
             _userDal = new UserDataAccess(context);
         }
 
-        public void Add(string productId, string text, string publisherId)
+        public void Add(string productId, string text, string publisherId, double rating)
         {
+            double newRating = rating < 0 ? 0 : rating > 10 ? 10 : rating;
             var comment = new Models.Comment
             {
                 Text = text,
                 Date = DateTime.Now,
-                Publisher = _userDal.GetUser(publisherId)
+                Publisher = _userDal.GetUser(publisherId),
+                Rating = newRating
             };
 
             _productDal.AddComment(int.Parse(productId), comment);

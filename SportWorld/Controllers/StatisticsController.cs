@@ -22,17 +22,17 @@ namespace SportWorld.Controllers
         {
 
             var usersByGender = _SportWorldContext.User
-                .GroupBy(g => g.Gender)
+                .GroupBy(user => user.Gender)
                 .Select(x => new { gender = x.Key.ToString(), count = x.Count() })
                 .ToList();
             
             var prodcutsByCategory = _SportWorldContext.Product
-                .GroupBy(p => p.Category)
+                .GroupBy(product => product.Category)
                 .Select(x => new { category = x.Key.ToString(), count = x.Count() })
                 .ToList();
 
             var commentsByGender = _SportWorldContext.Comment
-                .GroupBy(c => c.Publisher.Gender)
+                .GroupBy(comment => comment.Publisher.Gender)
                 .Select(x => new { gender = x.Key.ToString(), count = x.Count() });
 
             ViewBag.prodcutsByCategory = JsonConvert.SerializeObject(prodcutsByCategory);

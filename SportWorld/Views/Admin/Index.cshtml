@@ -1,25 +1,18 @@
 ﻿
-    <section>
-        <br />
-        <div class="alert alert-info" role="alert">
-            To view some statistics @Html.ActionLink("click here", "GetStatistics", "Statistics")
-        </div>
-        <br />
-        <div class="alert alert-danger" role="alert">
-            To view users info @Html.ActionLink("click here", "Details", "User")
-        </div>
-        <br />
-        <div class="alert alert-success" role="alert">
-            To add a new product @Html.ActionLink("click here", "Create", "Product")
-        </div>
-        <br />
-        <div class="alert alert-warning" role="alert">
-            To add a new store @Html.ActionLink("click here", "Create", "Store")
-        </div>
-        <br />
-        <hr />
-        <br />
-    </section>
+<section class="fontStyle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr));grid-gap:1rem;margin:2rem 1rem">
+    <div class="alert alert-info" role="alert">
+        @Html.ActionLink("View statistics", "GetStatistics", "Statistics")
+    </div>
+    <div class="alert alert-danger" role="alert">
+        @Html.ActionLink("View users info", "Details", "User")
+    </div>
+    <div class="alert alert-success" role="alert">
+        @Html.ActionLink("Add products", "Create", "Product")
+    </div>
+    <div class="alert alert-warning" role="alert">
+        @Html.ActionLink("Add store", "Create", "Store")
+    </div>
+</section>
 
 <section>
     <h2>Search for users comments</h2>
@@ -34,7 +27,7 @@
         </div>
         <div class="form-group">
             <label class="control-label">User name</label>
-           <select name="username" class="form-control">
+            <select name="username" class="form-control">
                 @foreach (var user in ViewBag.users as IEnumerable<User>)
                 {
                     <option value="@user.UserName">@user.UserName</option>

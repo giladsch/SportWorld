@@ -23,22 +23,18 @@ namespace SportWorld.Controllers
             return View("Views/Catalog/index.cshtml", _productBl.GetProductsByCategory(category));
         }
 
-        public ActionResult Search(Category category, double from, double to)
+        public ActionResult Search(Category category, double from = 0, double to = double.MaxValue)
         {
             try
             {
-                if (from <= 0 || to <= 0)
+                if (from < 0 || to <= 0 || from > to)
                 {
-                    return RedirectToAction("Index", "Error", new { error = "from or to cant be negative or zero" });
-                }
-
-                if (from > to)
-                {
-                    return RedirectToAction("Index", "Error", new { error = "from range cant be higer than to" });
+                    return RedirectToAction("Index", "Error", new { error = "Oops! You have entered an invalid range." });
                 }
 
                 var products = _productBl.GetProductsByCategory(category)
                     .Where(p => p.Price <= to && p.Price >= from);
+
                 return View("Views/Catalog/index.cshtml", products);
             }
             catch

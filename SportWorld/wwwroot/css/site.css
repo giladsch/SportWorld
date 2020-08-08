@@ -1,4 +1,9 @@
-﻿body {
+﻿@font-face {
+    font-family: "Open Sans";
+    src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"), url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

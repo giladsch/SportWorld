@@ -55,8 +55,13 @@
     box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.2);
 }
 
-.video{
-    width:100%;
+.video {
+    width: 100%;
+    transition: width 2s;
+}
+
+video:hover {
+    width: 107%;
 }
 
 .carouselAndVideo{

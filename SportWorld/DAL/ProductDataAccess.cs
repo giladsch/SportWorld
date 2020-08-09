@@ -9,14 +9,14 @@ namespace SportWorld.DAL
 {
     public class ProductDataAccess
     {
-        private readonly SportWorldContext _SportWorldContext;
+        private readonly SportWorldContext _sportWorldContext;
 
-        public ProductDataAccess(SportWorldContext SportWorldContext)
+        public ProductDataAccess(SportWorldContext sportWorldContext)
         {
-            _SportWorldContext = SportWorldContext;
+            _sportWorldContext = sportWorldContext;
         }
 
-        public List<Product> GetAllProducts() => _SportWorldContext
+        public List<Product> GetAllProducts() => _sportWorldContext
                 .Product
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Publisher)
@@ -24,7 +24,7 @@ namespace SportWorld.DAL
 
         public Product GetProductById(int productId)
         {
-            return _SportWorldContext.Product
+            return _sportWorldContext.Product
                                 .Include(p => p.Comments)
                                 .ThenInclude(c => c.Publisher)
                                 .FirstOrDefault(x => x.ID == productId);
@@ -32,7 +32,7 @@ namespace SportWorld.DAL
 
         public IEnumerable<Product> GetProductsByCategory(Category category)
         {
-            return _SportWorldContext.Product
+            return _sportWorldContext.Product
                     .Include(p => p.Comments)
                     .ThenInclude(c => c.Publisher)
                     .Where(p => p.Category == category)
@@ -41,25 +41,25 @@ namespace SportWorld.DAL
 
         public void SaveProducts(IEnumerable<Product> products)
         {  
-            _SportWorldContext.Product.AddRange(products);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Product.AddRange(products);
+            _sportWorldContext.SaveChanges();
         }
 
         public void AddComment(int productId, Comment comment)
         {
             this.GetProductById(productId).Comments.Add(comment);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.SaveChanges();
         }
 
         public void UpdateProduct(Product product)
         {
-            _SportWorldContext.Product.Update(product);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Product.Update(product);
+            _sportWorldContext.SaveChanges();
         }
 
         public void DeleteProduct(Product product)
         {
-            var productToDelete = _SportWorldContext
+            var productToDelete = _sportWorldContext
                 .Product
                 .Include(p => p.Comments)
                 .SingleOrDefault(p => p.ID == product.ID);
@@ -70,9 +70,9 @@ namespace SportWorld.DAL
                     Exception(string.Format("could not find product with id {0}", product.ID));
             }
 
-            _SportWorldContext.Comment.RemoveRange(productToDelete.Comments);
-            _SportWorldContext.Product.Remove(productToDelete);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Comment.RemoveRange(productToDelete.Comments);
+            _sportWorldContext.Product.Remove(productToDelete);
+            _sportWorldContext.SaveChanges();
         }
     }
 }

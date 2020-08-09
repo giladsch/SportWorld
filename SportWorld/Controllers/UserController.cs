@@ -28,7 +28,7 @@ namespace SportWorld.Controllers
         {
             try
             {
-                var errorMessage = GetErrorIfInvalid(user,true);
+                var errorMessage = GetErrorIfInvalid(user, true);
 
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
@@ -82,11 +82,16 @@ namespace SportWorld.Controllers
         // POST: User/Edit/name
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string username, [Bind("Gender", "UserName", "Email")] User user)
+        public ActionResult Edit(string username, [Bind("Gender", "UserName", "Email, IsAdmin")] User user)
         {
+            if (!IsAdminConnected())
+            {
+                return RedirectToAction("Index", "Error", new { error = "You must be an admin to edit." });
+            }
+
             try
             {
-                var errorMessage = GetErrorIfInvalid(user,false);
+                var errorMessage = GetErrorIfInvalid(user, false);
 
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
@@ -100,9 +105,16 @@ namespace SportWorld.Controllers
                     return RedirectToAction("Index", "Error", new { error = string.Format("Could not find user with username {0}", username) });
                 }
 
+                // in case of last admin make himself not admin
+                if (_userBl.GetHowManyAdmins() == 1 && HttpContext.Session.GetString("ConnectedUserId") == user.UserName && user.IsAdmin == false)
+                {
+                    user.IsAdmin = true;
+                }
+
                 userToEdit.Gender = user.Gender;
                 userToEdit.UserName = user.UserName;
                 userToEdit.Email = user.Email;
+                userToEdit.IsAdmin = user.IsAdmin;
 
                 _userBl.UpdateUser(userToEdit);
 
@@ -172,7 +184,7 @@ namespace SportWorld.Controllers
             return View(_userBl.GetAllUsers());
         }
 
-        private string GetErrorIfInvalid(User user,bool shouldCheckUsername)
+        private string GetErrorIfInvalid(User user, bool shouldCheckUsername)
         {
             var error = string.Empty;
 
@@ -209,7 +221,7 @@ namespace SportWorld.Controllers
             }
             else
             {
-                if(user.Password != password)
+                if (user.Password != password)
                 {
                     return RedirectToAction("Index", "Error", new { error = "username or password wrong" });
                 }

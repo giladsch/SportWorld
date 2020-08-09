@@ -10,17 +10,16 @@ namespace SportWorld.DAL
 {
     public class AdminDataAccess
     {
-        private readonly SportWorldContext _SportWorldContext;
+        private readonly CommentDataAccess _commentDataAccess;
 
-        public AdminDataAccess(SportWorldContext SportWorldContext)
+        public AdminDataAccess(SportWorldContext sportWorldContext)
         {
-            _SportWorldContext = SportWorldContext;
+            _commentDataAccess = new CommentDataAccess(sportWorldContext);
         }
 
         public IEnumerable<Comment> GetByUserIdInDateRange(DateTime start, DateTime end, string username)
         {
-            var comments = _SportWorldContext.Comment
-                .Include(usr => usr.Publisher)
+            var comments = _commentDataAccess.GetAll()
                 .Where(c => c.Date >= start &&
                        c.Date <= end &&
                        c.Publisher.UserName == username);

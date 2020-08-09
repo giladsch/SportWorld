@@ -47,5 +47,10 @@ namespace SportWorld.BL
         {
             return _userDal.GetAllUsers();
         }
+
+        public int GetHowManyAdmins()
+        {
+            return _userDal.GetHowManyAdmins();
+        }
     }
 }

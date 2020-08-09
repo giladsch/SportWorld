@@ -24,7 +24,7 @@ namespace SportWorld.DAL
 
         public List<Comment> GetAll()
         {
-            return _sportWorldContext.Comment.Include(usr => usr.Publisher).ToList();
+            return _sportWorldContext.Comment.Include(usr => usr.Publisher).OrderByDescending(p=>p.Rating).ToList();
         }
 
         public void Delete(int commentId)

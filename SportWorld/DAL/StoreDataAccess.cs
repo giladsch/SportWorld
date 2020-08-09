@@ -8,54 +8,54 @@ namespace SportWorld.DAL
 {
     public class StoreDataAccess
     {
-        private readonly SportWorldContext _SportWorldContext;
+        private readonly SportWorldContext _sportWorldContext;
 
-        public StoreDataAccess(SportWorldContext SportWorldContext)
+        public StoreDataAccess(SportWorldContext sportWorldContext)
         {
-            _SportWorldContext = SportWorldContext;
+            _sportWorldContext = sportWorldContext;
         }
 
         public void UpdateStore(Store storeToUpdate)
         {
-            _SportWorldContext.Store.Update(storeToUpdate);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Store.Update(storeToUpdate);
+            _sportWorldContext.SaveChanges();
         }
 
         public Store GetStoreById(int id)
         {
-            return _SportWorldContext.Store
+            return _sportWorldContext.Store
                 .SingleOrDefault(x => x.ID == id);
         }
 
         public List<Store> GetAllStores()
         {
-            return _SportWorldContext.Store
+            return _sportWorldContext.Store
                 .ToList();
         }
 
         public IEnumerable<Store> GetStoreByName(string name)
         {
-            return _SportWorldContext.Store
+            return _sportWorldContext.Store
                                 .Where(s => s.Name.Contains(name))
                                 .ToList();
         }
 
         public Store GetStroeById(int storeId)
         {
-            return _SportWorldContext.Store
+            return _sportWorldContext.Store
                 .SingleOrDefault(store => store.ID == storeId);
         }
 
         public void AddStore(Store store)
         {
-            _SportWorldContext.Store.Add(store);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Store.Add(store);
+            _sportWorldContext.SaveChanges();
         }
 
         public void DeleteStore(Store store)
         {
-            _SportWorldContext.Store.Remove(store);
-            _SportWorldContext.SaveChanges();
+            _sportWorldContext.Store.Remove(store);
+            _sportWorldContext.SaveChanges();
         }
     }
 }

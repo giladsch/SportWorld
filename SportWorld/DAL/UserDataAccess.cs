@@ -10,29 +10,29 @@ namespace SportWorld.DAL
 {
     public class UserDataAccess
     {
-        private readonly SportWorldContext _context;
+        private readonly SportWorldContext _sportWorldContext;
 
-        public UserDataAccess(SportWorldContext context)
+        public UserDataAccess(SportWorldContext sportWorldContext)
         {
-            _context = context;
+            _sportWorldContext = sportWorldContext;
         }
 
         public void AddUser(User user)
         {
-            _context.User.Add(user);
+            _sportWorldContext.User.Add(user);
 
-            _context.SaveChanges();
+            _sportWorldContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            _context.User.Update(user);
-            _context.SaveChanges();
+            _sportWorldContext.User.Update(user);
+            _sportWorldContext.SaveChanges();
         }
 
         public void DeletUser(User user)
         {
-            var userToDelete = _context
+            var userToDelete = _sportWorldContext
                 .User
                 .SingleOrDefault(u => u.UserName == user.UserName);
 
@@ -44,23 +44,28 @@ namespace SportWorld.DAL
 
             userToDelete.IsDeleted = true;
 
-            _context.User.Update(user);
-            _context.SaveChanges();
+            _sportWorldContext.User.Update(user);
+            _sportWorldContext.SaveChanges();
         }
 
         public bool IsUserExist(string username)
         {
-            return _context.User.Any(u => u.UserName == username);
+            return _sportWorldContext.User.Any(u => u.UserName == username);
         }
 
         public User GetUser(string username)
         {
-            return _context.User.FirstOrDefault(u => u.UserName == username);
+            return _sportWorldContext.User.FirstOrDefault(u => u.UserName == username);
         }
 
         public List<User> GetAllUsers()
         {
-            return _context.User.ToList();
+            return _sportWorldContext.User.ToList();
+        }
+
+        public int GetHowManyAdmins()
+        {
+            return _sportWorldContext.User.Count(u => u.IsAdmin ==true);
         }
     }
 }

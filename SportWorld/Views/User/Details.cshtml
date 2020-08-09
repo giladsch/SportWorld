@@ -11,6 +11,7 @@
         <th>UserName</th>
         <th>Email</th>
         <th>Gender</th>
+        <th>Admin</th>
         <th></th>
         <th></th>
     </tr>
@@ -22,6 +23,7 @@
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>@user.Gender</td>
+                <td>@user.IsAdmin.ToString()</td>
                 <td> @Html.ActionLink("Edit", "Edit", "User", new { username = user.UserName })</td> |
                 <td> @Html.ActionLink("Delete", "Delete", "User", new { username = user.UserName })</td>
             </tr>

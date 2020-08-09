@@ -26,13 +26,6 @@ namespace SportWorld.Controllers
             return View(_productBl.GetAllProducts());
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Please Contact Us";
-
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

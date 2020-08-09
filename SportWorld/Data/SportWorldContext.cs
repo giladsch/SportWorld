@@ -110,19 +110,32 @@ namespace SportWorld.Data
         private List<Comment> commentToAdd(bool addComments = false, double price = 0, string name = "", User Gilad = null, User Adi = null, User Noy = null)
         {
             if (!addComments) return null;
-            double numOfComments = price % 3 == 0 ? 3 : price % 3;
-            List<Comment> comments = new List<Comment>();
-            for (int i = 0; i < numOfComments; i++)
+            Random a = new Random();
+            var num = a.Next(1, 4);
+            var comment =  new Comment
             {
-                comments.Add(new Comment
-                {
-                    Publisher = i % 3 == 0 ? Gilad : i % 3 == 1 ? Adi : Noy,
-                    Date = DateTime.Now.AddDays(-1),
-                    Text = $"{name} is the greatest!",
-                    Rating = price % 10
-                }); 
-            }
-            return comments;
+                Publisher = num % 3 == 0 ? Gilad : num % 3 == num ? Adi : Noy,
+                Date = DateTime.Now.AddDays(-1),
+                Text = $"{name} is the best sport product ever!",
+                Rating = UptoTwoDecimalPoints(GetRandomNumber())
+            };
+
+            return new List<Comment>()
+            {
+                comment
+            };
+        }
+
+        private double GetRandomNumber()
+        {
+            Random random = new Random();
+            return random.NextDouble() * 10;
+        }
+
+        private double UptoTwoDecimalPoints(double num)
+        {
+            var totalCost = Convert.ToDouble(String.Format("{0:0.00}", num));
+            return totalCost;
         }
     }
 }

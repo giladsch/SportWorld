@@ -7,49 +7,53 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using SportWorld.BL;
+using SportWorld.DAL;
 using SportWorld.Data;
 
 namespace SportWorld.Controllers
 {
     public class Recommendation : Controller
     {
-        private readonly SportWorldContext _sportWorldContext;
+        private readonly ProductBl _productBl;
+        private readonly CommentBl _commentBl;
+        private readonly UserBl _userBl;
         public Recommendation(SportWorldContext sportWorldContext)
         {
-            _sportWorldContext = sportWorldContext;
+            _productBl = new ProductBl(sportWorldContext);
+            _commentBl = new CommentBl(sportWorldContext);
+            _userBl = new UserBl(sportWorldContext);
         }
+
         // GET: Recommendation
         public ActionResult Index()
         {
             double min = int.MaxValue;
             var closestUserName = "";
-            var usersScore = new Dictionary<string, double>();
             string userName = HttpContext.Session.GetString("ConnectedUserId");
             if (String.IsNullOrEmpty(userName))
             {
-                return  RedirectToAction("Index", "Error", new { error = string.Format("Could not find current user") });
+                return RedirectToAction("Index", "Error", new { error = string.Format("Could not find current user") });
             }
 
             try
             {
+                var user = _userBl.GetById(userName);
 
-                var user = _sportWorldContext.User.FirstOrDefault(u => u.UserName == userName);
+                // dictionary of score of user
+                var usersScore = _commentBl.GetAll().GroupBy(c => c.Publisher.UserName)
+                             .Select(g => new
+                             {
+                                 g.Key,
+                                 Value = g.Sum(x => x.Rating)
+                             }).ToDictionary(x => x.Key, x => x.Value);
 
-                var usersComments = _sportWorldContext.Comment.GroupBy(c => c.Publisher.UserName).ToList();
-
-                usersComments.ForEach(group =>
-                {
-                    usersScore[group.Key] = 0;
-                    group.ToList().ForEach(c =>
-                    {
-                        usersScore[group.Key] += c.Rating;
-                    });
-                });
-
+                // get current user score
                 var userScore = usersScore[userName];
 
                 usersScore.Remove(userName);
 
+                // get closest user for current user
                 foreach (var item in usersScore)
                 {
                     if (min > Math.Abs(userScore - item.Value))
@@ -59,16 +63,22 @@ namespace SportWorld.Controllers
                     }
                 }
 
-                var closetsUsersComment = _sportWorldContext.Comment.Where(c => c.Publisher.UserName == closestUserName).OrderByDescending(c => c.Rating).ToList().First();
-                var allProducts = _sportWorldContext.Product
-                    .Include(p => p.Comments)
-                    .ThenInclude(c => c.Publisher)
-                    .ToList(); ;
-                var recommendedProduct = allProducts.First(p => p.Comments.ToList().Contains(closetsUsersComment));
+                var allProducts = _productBl.GetAllProducts();
+
+                var comment = allProducts.FindAll(p => p.Comments.Any(c => c.Publisher != user && c.Publisher.UserName == closestUserName)).SelectMany(p => p.Comments).ToList().FindAll(c => c.Publisher.UserName == closestUserName).OrderByDescending(c => c.Rating).FirstOrDefault();
+
+                if(comment == null)
+                {
+                    var highestComment = allProducts.SelectMany(p => p.Comments).ToList().OrderByDescending(c => c.Rating).FirstOrDefault();
+                    var recommendedHeightestProduct = allProducts.First(p => p.Comments.ToList().Contains(comment));
+                    return View(recommendedHeightestProduct);
+                }
+
+                var recommendedProduct = allProducts.First(p => p.Comments.ToList().Contains(comment));
 
                 return View(recommendedProduct);
             }
-            catch
+            catch (Exception e)
             {
                 return RedirectToAction("Index", "Error", new { error = string.Format("an error while get recommendation please try again") });
             }
